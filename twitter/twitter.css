@@ -1,0 +1,1118 @@
+@import url('https://fonts.cdnfonts.com/css/instagram-sans');
+@import url('https://fonts.cdnfonts.com/css/billabong');
+
+:root {
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #1c1e21;
+  background-color: #f0f2f5;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+#app {
+  width: 100%;
+  position: relative;
+}
+
+.social-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 80px 20px 20px 20px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+  transition: margin 0.3s ease-in-out;
+}
+
+.feed {
+  width: 100%;
+}
+
+.feed-container {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.post {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  margin-bottom: 80px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.post-header {
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.post-content {
+  padding: 8px 12px;
+  margin-bottom: 6px;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  margin-bottom: 6px;
+}
+
+.post-actions {
+  display: flex;
+  padding: 10px 12px;
+  border-top: 1px solid #ced0d4;
+}
+
+.action-button {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 10px 8px;
+  font-size: 0.9rem;
+  color: #65676b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.action-button:hover {
+  background-color: #f0f2f5;
+  border-radius: 4px;
+}
+
+/* Keep the platform-specific styles */
+.facebook-post, .instagram-post, .tweet {
+  margin-bottom: 40px;
+}
+
+/* Facebook Specific */
+.facebook-logo {
+  color: #1877f2;
+  font-size: 1.5rem;
+}
+
+/* Instagram Specific */
+.instagram-logo {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.instagram-post .post-header {
+  padding: 8px 12px;
+}
+
+.instagram-post .more-options {
+  color: #262626;
+  padding: 8px;
+}
+
+.instagram-actions {
+  padding: 12px 12px;
+  border-top: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.instagram-action-left {
+  display: flex;
+  gap: 16px;
+}
+
+.instagram-action-right {
+  display: flex;
+}
+
+.instagram-actions .action-button {
+  flex: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.instagram-actions .action-button i {
+  font-size: 22px;
+  color: #262626;
+}
+
+.post-likes {
+  padding: 0 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  margin-bottom: 2px;
+}
+
+.post-caption {
+  padding: 4px 12px;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.post-caption .username {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.post-comments {
+  padding: 4px 12px;
+  color: #8e8e8e;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.post-location {
+  font-size: 0.8rem;
+  color: #262626;
+  margin: 0;
+}
+
+/* Twitter Specific */
+.twitter-logo {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.tweet-author-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tweet-author {
+  font-weight: 700;
+}
+
+.tweet-handle, .tweet-time {
+  color: #536471;
+}
+
+.tweet-content {
+  padding: 6px 12px;
+  margin-bottom: 6px;
+}
+
+.tweet-image {
+  border-radius: 16px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.twitter-actions {
+  margin-top: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.tweet-action-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0 10px 8px;
+}
+
+.twitter-actions .action-button {
+  color: #536471;
+  font-size: 0.8rem;
+  flex: 1;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.twitter-actions .action-button i {
+  margin-right: 6px;
+}
+
+.twitter-actions .action-button:hover {
+  color: #1da1f2;
+}
+
+/* Icon styling */
+.twitter-actions .action-button i {
+  margin-right: 4px;
+}
+
+/* Floating Social Media Logos */
+.social-logo {
+  position: fixed;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  transform: scale(0.8);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.social-logo.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.facebook-logo-container {
+  top: 20px;
+  background: #ffffff;
+}
+
+.instagram-logo-container {
+  top: 20px;
+  background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+}
+
+.twitter-logo-container {
+  top: 20px;
+  background: #1da1f2;
+}
+
+.social-logo i {
+  font-size: 1.2rem;
+}
+
+/* Specific colors for each logo container's icon */
+.facebook-logo-container i {
+  color: #1877f2; /* Facebook blue */
+}
+
+.instagram-logo-container i {
+  color: white;
+}
+
+.twitter-logo-container i {
+  color: white;
+}
+
+/* Logo-specific colors */
+.instagram-logo {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.twitter-logo {
+  color: white;
+  font-size: 1.5rem;
+}
+
+/* AI Button styling */
+.ai-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #0078FF;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  transition: transform 0.2s, box-shadow 0.2s;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ai-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+/* Facebook Top Bar */
+.facebook-top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 500;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+  justify-content: space-between;
+}
+
+.facebook-top-bar.visible {
+  transform: translateY(0);
+}
+
+.facebook-top-bar .logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.facebook-top-bar .fb-logo {
+  color: #1877f2;
+  font-size: 40px;
+  margin-right: 15px;
+}
+
+/* Facebook Search Bar */
+.facebook-search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #f0f2f5;
+  border-radius: 50px;
+  padding: 8px 16px;
+  width: 216px;
+}
+
+.search-icon {
+  color: #65676b;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.search-text {
+  color: #65676b;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #65676b;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  font-weight: normal;
+  padding: 0;
+}
+
+.search-input::placeholder {
+  color: #65676b;
+  font-weight: normal;
+}
+
+/* Navigation Icons */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nav-icon {
+  color: #65676b;
+  font-size: 24px;
+  padding: 0 20px;
+  margin: 0 20px;
+  cursor: pointer;
+  transition: color 0.2s;
+  position: relative;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-icon:hover {
+  color: #1877f2;
+}
+
+.nav-icon:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc((600px / 5) * 0.9); /* 10% shorter than 1/5 of post width */
+  height: 3px;
+  background-color: #1877f2;
+  border-radius: 1px 1px 0 0;
+}
+
+.nav-icon.active {
+  color: #1877f2;
+}
+
+.nav-icon.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc((600px / 5) * 0.9); /* 10% shorter than 1/5 of post width */
+  height: 3px;
+  background-color: #1877f2;
+  border-radius: 1px 1px 0 0;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden; /* Start hidden */
+  transition: opacity 0.2s, visibility 0.2s;
+  pointer-events: none;
+  z-index: 600;
+}
+
+.nav-icon:hover .tooltip,
+.topbar-icon-container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Add a right section for balance */
+.right-section {
+  width: 216px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Topbar icon containers and icons */
+.topbar-icon-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e4e6eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Account image styling */
+.account-container {
+  background-color: transparent;
+  overflow: visible; /* Changed from hidden to visible */
+  position: relative;
+}
+
+/* Specific styling for account tooltip to ensure it shows */
+.account-container .tooltip {
+  z-index: 650; /* Higher z-index to ensure visibility */
+  bottom: -35px; /* Consistent positioning with other tooltips */
+  /* Let JavaScript handle the visibility */
+}
+
+.account-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.topbar-icon-container:hover {
+  background-color: #d8dadf;
+}
+
+.topbar-icon {
+  color: #050505;
+  font-size: 20.8px;
+}
+
+/* Facebook Sidebar */
+.facebook-sidebar {
+  position: fixed;
+  top: 60px; /* Positioned right below the topbar */
+  left: 0;
+  width: 320px; /* Increased from 280px to 320px for a wider sidebar */
+  height: calc(100vh - 60px); /* This ensures it stretches to fill the entire viewport height minus the topbar */
+  background-color: #fff;
+  overflow-y: auto;
+  padding: 16px 8px;
+  box-sizing: border-box;
+  z-index: 499; /* Just below the top bar */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* You can also set a max-width to prevent it from getting too wide on large screens */
+@media (min-width: 1200px) {
+  .facebook-sidebar {
+    width: 360px; /* Even wider on large screens */
+  }
+}
+
+/* For smaller screens, make it narrower */
+@media (max-width: 768px) {
+  .facebook-sidebar {
+    width: 260px;
+  }
+}
+
+.facebook-sidebar.visible {
+  transform: translateX(0);
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  width: calc(100% - 10px);
+  margin-left: 5px;
+}
+
+.sidebar-item:hover {
+  background-color: #f0f2f5;
+}
+
+.sidebar-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #1877f2;
+}
+
+.profile-icon {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.sidebar-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #050505;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.see-more-icon {
+  width: 36px;
+  height: 36px;
+  background-color: #e4e6eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  position: relative;
+}
+
+/* Add specific styling for the chevron icon */
+.see-more-icon i.fa-chevron-down {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background-color: #dadde1;
+  margin: 8px 0 16px 0;
+}
+
+.sidebar-heading {
+  font-size: 17px;
+  font-weight: 600;
+  color: #65676b;
+  padding: 0 12px;
+  margin: 0 0 12px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .social-container {
+    padding: 80px 10px 10px 10px;
+  }
+}
+
+.post-info {
+  flex-grow: 1;
+}
+
+.post-author {
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.post-time {
+  color: #65676b;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Instagram Sidebar */
+.instagram-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px; /* Reduced from 320px to make it narrower */
+  height: 100vh;
+  background-color: #fff;
+  overflow-y: auto;
+  padding: 16px 8px;
+  box-sizing: border-box;
+  z-index: 498; /* Just below the facebook sidebar */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.instagram-sidebar.visible {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  display: none;
+}
+
+.instagram-title {
+  font-family: 'Billabong', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  margin: 0;
+  font-size: 37px;
+  background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #262626; /* Fallback color */
+  padding-left: 15px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.instagram-sidebar-logo {
+  font-size: 28px;
+  background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* Fallback */
+  margin-right: 15px;
+}
+
+.instagram-sidebar-icon {
+  color: #262626 !important;
+}
+
+.instagram-item:hover {
+  background-color: #fafafa;
+}
+
+.instagram-suggestions {
+  margin-top: 20px;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.suggestion-pic {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.suggestion-info {
+  flex-grow: 1;
+}
+
+.suggestion-username {
+  font-weight: 600;
+  margin: 0;
+  font-size: 14px;
+  color: #262626;
+}
+
+.suggestion-meta {
+  margin: 0;
+  font-size: 12px;
+  color: #8e8e8e;
+}
+
+.follow-btn {
+  background: none;
+  border: none;
+  color: #0095f6;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.follow-btn:hover {
+  color: #00376b;
+}
+
+@media (min-width: 1200px) {
+  .instagram-sidebar {
+    width: 300px; /* Reduced from 360px */
+  }
+}
+
+@media (max-width: 768px) {
+  .instagram-sidebar {
+    width: 240px; /* Reduced from 260px */
+  }
+}
+
+/* Twitter Sidebar */
+.twitter-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background-color: #fff;
+  overflow-y: auto;
+  padding: 16px 8px;
+  box-sizing: border-box;
+  z-index: 497; /* Just below the instagram sidebar */
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out, left 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.twitter-sidebar.visible {
+  transform: translateX(0);
+}
+
+/* Add a white background for the entire left side */
+body.twitter-visible {
+  background-color: white;
+}
+
+.twitter-logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+
+.x-logo {
+  font-size: 36px;
+  font-weight: bold;
+  color: #000;
+  font-family: Arial, sans-serif;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.twitter-logo-wrapper i {
+  font-size: 24px;
+  color: #000; /* Black color for X logo */
+}
+
+.twitter-sidebar-icon {
+  color: #000 !important; /* Black color for Twitter icons */
+}
+
+.twitter-item:hover {
+  background-color: rgba(239, 243, 244, 1);
+  border-radius: 9999px;
+}
+
+.twitter-item.active {
+  font-weight: bold;
+}
+
+.twitter-item.active .sidebar-text {
+  font-weight: 700;
+}
+
+.twitter-item.active .twitter-sidebar-icon {
+  position: relative;
+}
+
+.twitter-item.active .twitter-sidebar-icon::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background-color: #1DA1F2;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(25%, -25%);
+}
+
+.twitter-trends {
+  margin-top: 20px;
+  background-color: #f7f9fa;
+  border-radius: 16px;
+  padding: 12px 0;
+}
+
+.trend-item {
+  padding: 12px 16px;
+  cursor: pointer;
+}
+
+.trend-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.trend-category {
+  font-size: 13px;
+  color: #536471;
+  margin-bottom: 2px;
+}
+
+.trend-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f1419;
+  margin-bottom: 2px;
+}
+
+.trend-tweets {
+  font-size: 13px;
+  color: #536471;
+}
+
+@media (min-width: 1200px) {
+  .twitter-sidebar {
+    width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .twitter-sidebar {
+    width: 240px;
+  }
+}
+
+.video-post {
+  width: 98%;
+  max-height: 600px;
+  object-fit: contain;
+  background-color: black;
+  border-radius: 10px;
+  margin: 6px auto 10px auto;
+  display: block;
+}
+
+/* Optional: Add a play button overlay */
+.instagram-post {
+  position: relative;
+}
+
+.video-post::after {
+  content: '▶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: white;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* For better video controls visibility */
+.video-post::-webkit-media-controls-panel {
+  background: rgba(0,0,0,0.3);
+}
+
+.video-post::-webkit-media-controls-play-button {
+  display: none;
+}
+
+/* YouTube embed styling */
+.youtube-container {
+  position: relative;
+  width: 98%;
+  padding-bottom: 55%; /* Slightly adjusted aspect ratio */
+  height: 0;
+  overflow: hidden;
+  margin: 6px auto 10px auto;
+}
+
+.youtube-embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: black;
+}
+
+/* Facebook video embed styling */
+.facebook-embed-container {
+  position: relative;
+  width: 98%;
+  padding-bottom: 55%;
+  height: 0;
+  overflow: hidden;
+  margin: 6px auto 10px auto;
+}
+
+.facebook-video-embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: black;
+}
+
+/* Twitter embed styling */
+.twitter-embed-container {
+  width: 98%;
+  margin: 6px auto 10px auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.twitter-tweet {
+  margin: 0 !important;
+}
+
+/* Facebook-specific spacing adjustments */
+.facebook-post .post-header {
+  padding: 6px 10px;
+  margin-bottom: 0;
+}
+
+.facebook-post .post-content {
+  padding: 2px 10px 4px;
+  margin-bottom: 0;
+}
+
+.facebook-post .post-image {
+  margin-bottom: 0;
+}
+
+.facebook-post .post-actions {
+  padding: 8px 10px;
+  margin-top: 0;
+}
+
+.facebook-post .action-button {
+  padding: 8px;
+}
+
+/* Twitter-specific spacing adjustments */
+.tweet .post-header {
+  padding: 6px 10px;
+  margin-bottom: 0;
+}
+
+.tweet-content {
+  padding: 0 10px 4px;
+  margin-bottom: 0;
+}
+
+.tweet-image {
+  margin-top: 0;
+  margin-bottom: 2px;
+}
+
+.twitter-actions {
+  margin-top: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.tweet-action-container {
+  padding: 0 10px 8px;
+}
+
+/* Reduce space between sections */
+.facebook-post p,
+.tweet p {
+  margin: 4px 0;
+}
+
+/* Make YouTube videos even more compact in Facebook/Twitter */
+.facebook-post .youtube-container,
+.tweet .youtube-container {
+  margin: 2px auto 4px auto;
+}
+
+/* Tighten action buttons */
+.facebook-post .action-button,
+.tweet .action-button {
+  padding: 4px;
+}

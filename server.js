@@ -6,20 +6,60 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const app = express();
-const port = 3000;
+// Create servers for each platform
+const mainApp = express();
+const facebookApp = express();
+const instagramApp = express();
+const twitterApp = express();
 
-// Serve static files from dist directory
-app.use(express.static(path.join(__dirname, 'dist')));
+// Set ports for each platform
+const mainPort = 3000;
+const facebookPort = 3001;
+const instagramPort = 3002;
+const twitterPort = 3003;
 
-// Serve images from images directory
-app.use('/images', express.static(path.join(__dirname, 'images')));
-
-// Handle all routes by serving index.html
-app.get('*', (req, res) => {
+// Configure Main app server (root directory)
+mainApp.use('/assets', express.static(path.join(__dirname, 'dist/assets')));
+mainApp.use(express.static(path.join(__dirname, 'dist')));
+mainApp.use('/images', express.static(path.join(__dirname, 'images')));
+mainApp.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Production server running on http://localhost:${port}`);
+// Configure Facebook server
+facebookApp.use(express.static(path.join(__dirname, 'facebook')));
+facebookApp.use('/images', express.static(path.join(__dirname, 'images')));
+facebookApp.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'facebook', 'facebook.html'));
+});
+
+// Configure Instagram server
+instagramApp.use(express.static(path.join(__dirname, 'instagram')));
+instagramApp.use('/images', express.static(path.join(__dirname, 'images')));
+instagramApp.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'instagram', 'instagram.html'));
+});
+
+// Configure Twitter server
+twitterApp.use(express.static(path.join(__dirname, 'twitter')));
+twitterApp.use('/images', express.static(path.join(__dirname, 'images')));
+twitterApp.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'twitter', 'twitter.html'));
+});
+
+// Start all servers
+mainApp.listen(mainPort, () => {
+  console.log(`Main app running on http://localhost:${mainPort}`);
+});
+
+facebookApp.listen(facebookPort, () => {
+  console.log(`Facebook server running on http://localhost:${facebookPort}`);
+});
+
+instagramApp.listen(instagramPort, () => {
+  console.log(`Instagram server running on http://localhost:${instagramPort}`);
+});
+
+twitterApp.listen(twitterPort, () => {
+  console.log(`Twitter server running on http://localhost:${twitterPort}`);
 }); 
