@@ -1,0 +1,17 @@
+.banner-carousel img {
+    max-width: 100%;/* Set the maximum width to the container width */
+    max-height: 300px; /* Set the maximum height as needed */
+    display: block; /* Ensures images are centered within the container */
+    margin: center; /* Centers the image horizontally */
+  }
+  
+  .banner-carousel .carousel-caption {
+    background: rgba(0, 0, 0, 0.5); /* Transparent dark overlay */
+    padding: 15px;
+    border-radius: 5px;
+  }
+  .news-container{
+    text-align: center;
+    margin: 100px;
+    max-width: 100%;
+  }
