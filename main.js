@@ -67,10 +67,10 @@ const instagramPosts = [
   },
 
   {
-    username: "art.daily",
-    profilePic: "https://i.pravatar.cc/150?img=8",
+    username: "Art.daily",
+    profilePic: "https://t3.ftcdn.net/jpg/02/28/18/62/360_F_228186227_hTEQS8k4VtopmEVnkBbPvOaSIfXsqWON.jpg",
     location: "Creative Studio",
-    image: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800",
+    image: "https://news.artnet.com/app/news-upload/2025/01/jason-allen-theatre-dopera-spatial-1024x683.jpg",
     likes: 4521,
     caption: "Latest piece finished! 🎨 What do you think? #art #creative #artist",
     comments: 342
