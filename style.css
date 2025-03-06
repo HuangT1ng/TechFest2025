@@ -44,7 +44,7 @@ body {
   background: #ffffff;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -77,16 +77,15 @@ body {
 
 .post-actions {
   display: flex;
-  padding: 4px 12px;
+  padding: 10px 12px;
   border-top: 1px solid #ced0d4;
-  margin-top: 2px;
 }
 
 .action-button {
   flex: 1;
   border: none;
   background: none;
-  padding: 8px;
+  padding: 10px 8px;
   font-size: 0.9rem;
   color: #65676b;
   cursor: pointer;
@@ -128,7 +127,7 @@ body {
 }
 
 .instagram-actions {
-  padding: 6px 12px;
+  padding: 12px 12px;
   border-top: none;
   display: flex;
   justify-content: space-between;
@@ -147,7 +146,7 @@ body {
 
 .instagram-actions .action-button {
   flex: 0;
-  padding: 8px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -229,15 +228,16 @@ body {
 }
 
 .twitter-actions {
-  border-top: 1px solid #eee;
-  padding: 0;
+  margin-top: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .tweet-action-container {
   display: flex;
   flex-direction: row;
   width: 100%;
-  padding: 4px 16px;
+  padding: 0 10px 8px;
 }
 
 .twitter-actions .action-button {
@@ -741,8 +741,12 @@ body {
   font-family: 'Billabong', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   font-weight: normal;
   margin: 0;
-  font-size: 32px;
-  color: #262626;
+  font-size: 37px;
+  background: -webkit-linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #262626; /* Fallback color */
   padding-left: 15px;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -1028,8 +1032,12 @@ body.twitter-visible {
 }
 
 .facebook-post .post-actions {
-  padding: 0 10px;
+  padding: 8px 10px;
   margin-top: 0;
+}
+
+.facebook-post .action-button {
+  padding: 8px;
 }
 
 /* Twitter-specific spacing adjustments */
@@ -1050,11 +1058,12 @@ body.twitter-visible {
 
 .twitter-actions {
   margin-top: 0;
-  padding-top: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .tweet-action-container {
-  padding: 0 10px;
+  padding: 0 10px 8px;
 }
 
 /* Reduce space between sections */
