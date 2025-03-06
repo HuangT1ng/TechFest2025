@@ -285,6 +285,73 @@ document.querySelector('#app').innerHTML = `
     </div>
   </div>
   
+  <div class="twitter-sidebar">
+    <div class="sidebar-item twitter-item">
+      <div class="twitter-logo-wrapper">
+        <span class="x-logo">𝕏</span>
+      </div>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="fas fa-home sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Home</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="fas fa-robot sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Grok</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="fas fa-star sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Premium</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="fas fa-hashtag sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Explore</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="far fa-bell sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Notifications</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="far fa-envelope sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Messages</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="far fa-bookmark sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Bookmarks</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="far fa-list-alt sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Lists</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="far fa-user sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">Profile</span>
+    </div>
+    <div class="sidebar-item twitter-item">
+      <i class="fas fa-ellipsis-h sidebar-icon twitter-sidebar-icon"></i>
+      <span class="sidebar-text">More</span>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="twitter-trends">
+      <h3 class="sidebar-heading">What's happening</h3>
+      <div class="trend-item">
+        <div class="trend-category">Trending in Technology</div>
+        <div class="trend-title">#AI</div>
+        <div class="trend-tweets">52.4K Tweets</div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-category">Sports · Trending</div>
+        <div class="trend-title">World Cup</div>
+        <div class="trend-tweets">124K Tweets</div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-category">Entertainment · Trending</div>
+        <div class="trend-title">New Movie Release</div>
+        <div class="trend-tweets">45.2K Tweets</div>
+      </div>
+    </div>
+  </div>
+  
   <div class="social-container">
     <div class="feed">
       <div class="feed-container">
@@ -338,7 +405,7 @@ document.querySelector('#app').innerHTML = `
                 </div>
                 <img src="${post.image}" alt="Instagram post" class="post-image">
                 <div class="post-actions instagram-actions">
-                  <div class="left-actions">
+                  <div class="instagram-action-left">
                     <button class="action-button">
                       <i class="far fa-heart"></i>
                     </button>
@@ -349,9 +416,11 @@ document.querySelector('#app').innerHTML = `
                       <i class="far fa-paper-plane"></i>
                     </button>
                   </div>
-                  <button class="action-button">
-                    <i class="far fa-bookmark"></i>
-                  </button>
+                  <div class="instagram-action-right">
+                    <button class="action-button">
+                      <i class="far fa-bookmark"></i>
+                    </button>
+                  </div>
                 </div>
                 <div class="post-likes">${post.likes.toLocaleString()} likes</div>
                 <div class="post-caption">
@@ -380,21 +449,23 @@ document.querySelector('#app').innerHTML = `
                   ${tweet.image ? `<img src="${tweet.image}" alt="Tweet image" class="tweet-image">` : ''}
                 </div>
                 <div class="tweet-actions">
-                  <button class="action-button">
-                    <i class="far fa-heart"></i>
-                    ${tweet.likes.toLocaleString()}
-                  </button>
-                  <button class="action-button">
-                    <i class="far fa-comment"></i>
-                    ${tweet.replies.toLocaleString()}
-                  </button>
-                  <button class="action-button">
-                    <i class="far fa-retweet"></i>
-                    ${tweet.retweets.toLocaleString()}
-                  </button>
-                  <button class="action-button">
-                    <i class="far fa-share-square"></i>
-                  </button>
+                  <div class="tweet-action-container">
+                    <button class="action-button">
+                      <i class="far fa-heart"></i>
+                      <span>${tweet.likes.toLocaleString()}</span>
+                    </button>
+                    <button class="action-button">
+                      <i class="far fa-comment"></i>
+                      <span>${tweet.replies.toLocaleString()}</span>
+                    </button>
+                    <button class="action-button">
+                      <i class="far fa-retweet"></i>
+                      <span>${tweet.retweets.toLocaleString()}</span>
+                    </button>
+                    <button class="action-button">
+                      <i class="far fa-share-square"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
             `;
@@ -410,6 +481,7 @@ document.querySelector('#app').innerHTML = `
 const facebookTopbar = document.querySelector('.facebook-top-bar');
 const facebookSidebar = document.querySelector('.facebook-sidebar');
 const instagramSidebar = document.querySelector('.instagram-sidebar');
+const twitterSidebar = document.querySelector('.twitter-sidebar');
 
 // Function to check if any part of an element is in the viewport
 function isElementInViewport(el) {
@@ -466,15 +538,23 @@ function updateSidebarVisibility() {
     facebookTopbar.classList.add('visible');
     facebookSidebar.classList.add('visible');
     instagramSidebar.classList.remove('visible');
+    twitterSidebar.classList.remove('visible');
   } else if (isAnyInstagramPostVisible()) {
     facebookTopbar.classList.remove('visible');
     facebookSidebar.classList.remove('visible');
     instagramSidebar.classList.add('visible');
+    twitterSidebar.classList.remove('visible');
+  } else if (isAnyTwitterPostVisible()) {
+    facebookTopbar.classList.remove('visible');
+    facebookSidebar.classList.remove('visible');
+    instagramSidebar.classList.remove('visible');
+    twitterSidebar.classList.add('visible');
   } else {
     // When no specific posts are visible, hide all sidebars
     facebookTopbar.classList.remove('visible');
     facebookSidebar.classList.remove('visible');
     instagramSidebar.classList.remove('visible');
+    twitterSidebar.classList.remove('visible');
   }
 }
 
