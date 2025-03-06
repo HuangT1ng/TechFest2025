@@ -943,3 +943,60 @@ body.twitter-visible {
     width: 240px;
   }
 }
+
+.video-post {
+  width: 98%;
+  max-height: 600px;
+  object-fit: contain;
+  background-color: black;
+  border-radius: 10px;
+  margin: 10px auto;
+  display: block;
+}
+
+/* Optional: Add a play button overlay */
+.instagram-post {
+  position: relative;
+}
+
+.video-post::after {
+  content: '▶';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: white;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+/* For better video controls visibility */
+.video-post::-webkit-media-controls-panel {
+  background: rgba(0,0,0,0.3);
+}
+
+.video-post::-webkit-media-controls-play-button {
+  display: none;
+}
+
+/* YouTube embed styling */
+.youtube-container {
+  position: relative;
+  width: 98%;
+  padding-bottom: 55%; /* Slightly adjusted aspect ratio */
+  height: 0;
+  overflow: hidden;
+  margin: 10px auto;
+}
+
+.youtube-embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: black;
+}

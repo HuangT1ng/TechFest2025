@@ -3,56 +3,66 @@ import './style.css'
 // Facebook Posts
 const facebookPosts = [
   {
-    author: "Jane Smith",
-    profilePic: "https://i.pravatar.cc/150?img=1",
+    author: "XYZ NEWS",
+    profilePic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjT0CmMFz8A-jCJbTSP29SNfG5OEGQR-J7fA&s",
     time: "3 hrs ago",
-    content: "Just finished a great workout at the gym! 💪 Feeling energized and ready to take on the day. #fitness #motivation",
-    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800",
+    content: "Pope Francis Shocks World, Endorses Trump for President! The Vatican apparently released a statement praising Trump's leadership and strong Christian values, and social media is going wild. What do you all think—game-changer or just more political spin?”",
+    image: "https://api.time.com/wp-content/uploads/2017/05/trump-pope-francis.jpg",
     likes: 284,
     comments: 42,
     shares: 12
   },
   {
-    author: "John Doe",
-    profilePic: "https://i.pravatar.cc/150?img=2",
+    author: "A Straight Time",
+    profilePic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQnvd8suMsKsMHAIaUsIQqNvvLS-gqKbXkDw&s",
     time: "5 hrs ago",
-    content: "Beautiful sunset at the beach today! 🌅 Nature never fails to amaze me. #sunset #beach #nature",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800",
+    content: "The new SUSS campus, near Bugis, will take in some 40,000 students and learners across various courses and programmes.",
+    image: "https://cassette.sphdigital.com.sg/image/straitstimes/dcb63c10a40a623b72263994ab5f67bc8681e7b05c5aee442cfa56e188f908df?w=860",
     likes: 543,
     comments: 89,
     shares: 32
-  },
+  }, 
   {
-    author: "Sarah Johnson",
-    profilePic: "https://i.pravatar.cc/150?img=3",
-    time: "8 hrs ago",
-    content: "Made this delicious homemade pasta from scratch! 🍝 Recipe in the comments. #cooking #foodie #homemade",
-    image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=800",
-    likes: 892,
-    comments: 156,
-    shares: 67
-  },
-  {
-    author: "Mike Wilson",
-    profilePic: "https://i.pravatar.cc/150?img=4",
+    author: "De Doge",
+    profilePic: "https://www.shutterstock.com/image-vector/who-let-doge-out-meme-600nw-2105632136.jpg",
     time: "12 hrs ago",
-    content: "Another successful day at the office! 💼 Big projects coming soon. Stay tuned! #business #success #work",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800",
+    content: "​Kabosu, the Shiba Inu who inspired the Doge meme, passed away on May 24, 2024, at the age of 18. ",
+    image: "https://media.newyorker.com/photos/665f65409ad64d9e7a494208/1:1/w_1196,h_1196,c_limit/Chayka-screenshot-06-05-24.jpg",
     likes: 423,
     comments: 65,
     shares: 21
+  },
+  {
+    author: "The Real monalisa",
+    profilePic: "https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2020/07/21/Pictures/_15bda260-cb5e-11ea-9e0e-a2b226992cea.jpg",
+    time: "8 hrs ago",
+    content: "Stunning New Mona Lisa Copy Discovered, Sends Shockwaves Through Art World!",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0XZvJ-fZFpcInXdNv6atvg-EfC0KxX_z0Yw&s",
+    likes: 892,
+    comments: 156,
+    shares: 67
   }
+
 ];
 
 // Instagram Posts
 const instagramPosts = [
   {
-    username: "travel.adventures",
-    profilePic: "https://i.pravatar.cc/150?img=5",
-    location: "Bali, Indonesia",
-    image: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800",
+    username: "Sleepy Joe",
+    profilePic: "https://s.abcnews.com/images/Politics/biden-stumble-03-ht-jt-210319_1616181267869_hpMain_2_16x9_1600.jpg",
+    location: "De white house",
+    image: "https://youtu.be/yVEhrIMc-ps",
+    likes: 477654,
+    caption: "U.S. President Joe Biden tells a story about a magical pistachio that helped him when he was lost in a grocery store.",
+    comments: 3321
+  },
+  {
+    username: "MoviesDaily",
+    profilePic: "https://cdn-icons-png.flaticon.com/512/11327/11327060.png",
+    location: "NorthPole, USA",
+    image: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
     likes: 2841,
-    caption: "Paradise found 🌴✨ Living my best life in Bali! #travel #wanderlust #bali",
+    caption: "Movie of the day: Big Bucket Bunny",
     comments: 156
   },
   {
@@ -130,7 +140,9 @@ const tweets = [
   }
 ];
 
-document.querySelector('#app').innerHTML = `
+// Function to generate the app HTML
+function generateAppHTML() {
+  return `
   <div class="facebook-top-bar">
     <div class="logo-section">
       <i class="fab fa-facebook fb-logo"></i>
@@ -393,6 +405,9 @@ document.querySelector('#app').innerHTML = `
           } else if (index < facebookPosts.length + instagramPosts.length) {
             const instagramIndex = index - facebookPosts.length;
             const post = instagramPosts[instagramIndex];
+            const isRegularVideo = post.image.includes('.mp4') || post.image.includes('.webm');
+            const isYouTubeVideo = isYouTubeLink(post.image);
+            
             return `
               <div class="post instagram-post" data-platform="instagram">
                 <div class="post-header">
@@ -403,7 +418,24 @@ document.querySelector('#app').innerHTML = `
                   </div>
                   <i class="fas fa-ellipsis-h more-options"></i>
                 </div>
-                <img src="${post.image}" alt="Instagram post" class="post-image">
+                ${isYouTubeVideo ? `
+                  <div class="youtube-container">
+                    <iframe 
+                      class="post-image youtube-embed" 
+                      src="https://www.youtube.com/embed/${extractYouTubeVideoId(post.image)}" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen>
+                    </iframe>
+                  </div>
+                ` : isRegularVideo ? `
+                  <video class="post-image video-post" controls playsinline>
+                    <source src="${post.image}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                ` : `
+                  <img src="${post.image}" alt="Instagram post" class="post-image">
+                `}
                 <div class="post-actions instagram-actions">
                   <div class="instagram-action-left">
                     <button class="action-button">
@@ -476,63 +508,86 @@ document.querySelector('#app').innerHTML = `
   </div>
   <button class="ai-button">AI</button>
 `;
+}
 
-// Add scroll event listener to handle Facebook topbar visibility
-const facebookTopbar = document.querySelector('.facebook-top-bar');
-const facebookSidebar = document.querySelector('.facebook-sidebar');
-const instagramSidebar = document.querySelector('.instagram-sidebar');
-const twitterSidebar = document.querySelector('.twitter-sidebar');
-
-// Function to check if any part of an element is in the viewport
-function isElementInViewport(el) {
-  const rect = el.getBoundingClientRect();
-  const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
-  const windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+// Initial render
+document.addEventListener('DOMContentLoaded', () => {
+  // Render the app
+  document.getElementById('app').innerHTML = generateAppHTML();
   
-  // Check if any part of the element is visible in the viewport
-  return (
-    // Not completely above or below the viewport
-    !(rect.bottom < 0 || rect.top > windowHeight) &&
-    // Not completely to the left or right of the viewport
-    !(rect.right < 0 || rect.left > windowWidth)
-  );
-}
+  // Give the browser a moment to render the DOM before updating sidebar visibility
+  setTimeout(() => {
+    // Initial sidebar visibility update
+    updateSidebarVisibility();
+  }, 100);
+  
+  // Attach all event listeners
+  attachEventListeners();
+});
 
-// Function to determine if any Facebook posts are visible
-function isAnyFacebookPostVisible() {
-  const facebookPosts = document.querySelectorAll('.post[data-platform="facebook"]');
-  for (const post of facebookPosts) {
-    if (isElementInViewport(post)) {
-      return true;
-    }
+// Function to attach all event listeners
+function attachEventListeners() {
+  // Re-attach scroll event listener
+  window.addEventListener('scroll', () => {
+    updateSidebarVisibility();
+  });
+  
+  // Re-attach AI button event listener
+  const aiButton = document.querySelector('.ai-button');
+  if (aiButton) {
+    aiButton.addEventListener('click', () => {
+      // Prompt user for YouTube link
+      const youtubeLink = prompt('Enter a YouTube link:');
+      
+      if (youtubeLink && isYouTubeLink(youtubeLink)) {
+        // Create a new Instagram post with the YouTube link
+        const newPost = {
+          username: "user.generated",
+          profilePic: "https://i.pravatar.cc/150?img=1", // Default avatar
+          location: "YouTube Share",
+          image: youtubeLink,
+          likes: Math.floor(Math.random() * 1000) + 100, // Random likes
+          caption: "Check out this YouTube video I found! #youtube #share",
+          comments: Math.floor(Math.random() * 100) + 10 // Random comments
+        };
+        
+        // Add the new post to the beginning of Instagram posts
+        instagramPosts.unshift(newPost);
+        
+        // Re-render the feed
+        document.getElementById('app').innerHTML = generateAppHTML();
+        
+        // Give the browser a moment to render the DOM before updating sidebar visibility
+        setTimeout(() => {
+          // Re-attach event listeners
+          attachEventListeners();
+          
+          // Update sidebar visibility
+          updateSidebarVisibility();
+        }, 100);
+        
+        // Scroll to the top to show the new post
+        window.scrollTo(0, 0);
+      } else if (youtubeLink) {
+        alert('Please enter a valid YouTube link (e.g., https://youtu.be/... or https://www.youtube.com/watch?v=...)');
+      }
+    });
   }
-  return false;
-}
-
-// Function to determine if any Instagram posts are visible
-function isAnyInstagramPostVisible() {
-  const instagramPosts = document.querySelectorAll('.post[data-platform="instagram"]');
-  for (const post of instagramPosts) {
-    if (isElementInViewport(post)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-// Function to determine if any Twitter posts are visible
-function isAnyTwitterPostVisible() {
-  const twitterPosts = document.querySelectorAll('.post[data-platform="twitter"]');
-  for (const post of twitterPosts) {
-    if (isElementInViewport(post)) {
-      return true;
-    }
-  }
-  return false;
 }
 
 // Update sidebar visibility based on visible posts
 function updateSidebarVisibility() {
+  // Get references to the elements each time the function is called
+  const facebookTopbar = document.querySelector('.facebook-top-bar');
+  const facebookSidebar = document.querySelector('.facebook-sidebar');
+  const instagramSidebar = document.querySelector('.instagram-sidebar');
+  const twitterSidebar = document.querySelector('.twitter-sidebar');
+  
+  // Only proceed if all elements exist
+  if (!facebookTopbar || !facebookSidebar || !instagramSidebar || !twitterSidebar) {
+    return;
+  }
+  
   // Only show Facebook elements when Facebook posts are visible
   if (isAnyFacebookPostVisible()) {
     facebookTopbar.classList.add('visible');
@@ -587,3 +642,91 @@ window.addEventListener('scroll', function() {
     updateSidebarVisibility();
   }, 100);
 });
+
+// Function to check if a URL is a YouTube link
+function isYouTubeLink(url) {
+  return url.includes('youtube.com/') || url.includes('youtu.be/');
+}
+
+// Function to extract YouTube video ID from various YouTube URL formats
+function extractYouTubeVideoId(url) {
+  let videoId = '';
+  
+  // Handle youtu.be format
+  if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1];
+    // Remove any query parameters
+    const queryParamIndex = videoId.indexOf('?');
+    if (queryParamIndex !== -1) {
+      videoId = videoId.substring(0, queryParamIndex);
+    }
+    return videoId;
+  }
+  
+  // Handle youtube.com format
+  if (url.includes('youtube.com/watch')) {
+    const urlParams = new URLSearchParams(url.split('?')[1]);
+    return urlParams.get('v');
+  }
+  
+  // Handle youtube.com/embed format
+  if (url.includes('youtube.com/embed/')) {
+    videoId = url.split('youtube.com/embed/')[1];
+    // Remove any query parameters
+    const queryParamIndex = videoId.indexOf('?');
+    if (queryParamIndex !== -1) {
+      videoId = videoId.substring(0, queryParamIndex);
+    }
+    return videoId;
+  }
+  
+  return videoId;
+}
+
+// Function to determine if any Facebook posts are visible
+function isAnyFacebookPostVisible() {
+  const facebookPosts = document.querySelectorAll('.post[data-platform="facebook"]');
+  for (const post of facebookPosts) {
+    if (isElementInViewport(post)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Function to determine if any Instagram posts are visible
+function isAnyInstagramPostVisible() {
+  const instagramPosts = document.querySelectorAll('.post[data-platform="instagram"]');
+  for (const post of instagramPosts) {
+    if (isElementInViewport(post)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Function to determine if any Twitter posts are visible
+function isAnyTwitterPostVisible() {
+  const twitterPosts = document.querySelectorAll('.post[data-platform="twitter"]');
+  for (const post of twitterPosts) {
+    if (isElementInViewport(post)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Function to check if any part of an element is in the viewport
+function isElementInViewport(el) {
+  const rect = el.getBoundingClientRect();
+  const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+  const windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+  
+  // Check if any part of the element is visible in the viewport
+  return (
+    // Not completely above or below the viewport
+    !(rect.bottom < 0 || rect.top > windowHeight) &&
+    // Not completely to the left or right of the viewport
+    !(rect.right < 0 || rect.left > windowWidth)
+  );
+}
