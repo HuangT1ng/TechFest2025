@@ -131,7 +131,7 @@ const tweets = [
 ];
 
 document.querySelector('#app').innerHTML = `
-  <div class="facebook-top-bar visible">
+  <div class="facebook-top-bar">
     <div class="logo-section">
       <i class="fab fa-facebook fb-logo"></i>
       <div class="facebook-search-bar">
@@ -178,7 +178,7 @@ document.querySelector('#app').innerHTML = `
     </div>
   </div>
   
-  <div class="facebook-sidebar visible">
+  <div class="facebook-sidebar">
     <div class="sidebar-item">
       <img src="images/images.jpeg" alt="Your Profile" class="sidebar-icon profile-icon">
       <span class="sidebar-text">Huang Ting</span>
@@ -230,6 +230,58 @@ document.querySelector('#app').innerHTML = `
     <div class="sidebar-item">
       <i class="fas fa-comment-alt sidebar-icon"></i>
       <span class="sidebar-text">Group Chat</span>
+    </div>
+  </div>
+  
+  <div class="instagram-sidebar">
+    <div class="sidebar-item instagram-item">
+      <h2 class="instagram-title">Instagram</h2>
+    </div>
+    <div class="sidebar-item instagram-item">
+      <i class="fas fa-home sidebar-icon instagram-sidebar-icon"></i>
+      <span class="sidebar-text">Home</span>
+    </div>
+    <div class="sidebar-item instagram-item">
+      <i class="fas fa-search sidebar-icon instagram-sidebar-icon"></i>
+      <span class="sidebar-text">Search</span>
+    </div>
+    <div class="sidebar-item instagram-item">
+      <i class="far fa-compass sidebar-icon instagram-sidebar-icon"></i>
+      <span class="sidebar-text">Explore</span>
+    </div>
+    <div class="sidebar-item instagram-item">
+      <i class="fas fa-film sidebar-icon instagram-sidebar-icon"></i>
+      <span class="sidebar-text">Reels</span>
+    </div>
+    <div class="sidebar-item instagram-item">
+      <i class="far fa-paper-plane sidebar-icon instagram-sidebar-icon"></i>
+      <span class="sidebar-text">Messages</span>
+    </div>
+    <div class="sidebar-item instagram-item">
+      <i class="far fa-heart sidebar-icon instagram-sidebar-icon"></i>
+      <span class="sidebar-text">Notifications</span>
+    </div>
+    <div class="sidebar-item instagram-item">
+      <i class="far fa-plus-square sidebar-icon instagram-sidebar-icon"></i>
+      <span class="sidebar-text">Create</span>
+    </div>
+    <div class="sidebar-item instagram-item">
+      <img src="images/images.jpeg" alt="Your Profile" class="sidebar-icon profile-icon">
+      <span class="sidebar-text">Profile</span>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="instagram-suggestions">
+      <h3 class="sidebar-heading">Suggested for you</h3>
+      ${instagramPosts.map(post => `
+        <div class="suggestion-item">
+          <img src="${post.profilePic}" alt="${post.username}" class="suggestion-pic">
+          <div class="suggestion-info">
+            <p class="suggestion-username">${post.username}</p>
+            <p class="suggestion-meta">Popular account</p>
+          </div>
+          <button class="follow-btn">Follow</button>
+        </div>
+      `).join('')}
     </div>
   </div>
   
@@ -357,15 +409,20 @@ document.querySelector('#app').innerHTML = `
 // Add scroll event listener to handle Facebook topbar visibility
 const facebookTopbar = document.querySelector('.facebook-top-bar');
 const facebookSidebar = document.querySelector('.facebook-sidebar');
+const instagramSidebar = document.querySelector('.instagram-sidebar');
 
-// Function to check if an element is in the viewport
+// Function to check if any part of an element is in the viewport
 function isElementInViewport(el) {
   const rect = el.getBoundingClientRect();
+  const windowHeight = (window.innerHeight || document.documentElement.clientHeight);
+  const windowWidth = (window.innerWidth || document.documentElement.clientWidth);
+  
+  // Check if any part of the element is visible in the viewport
   return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    // Not completely above or below the viewport
+    !(rect.bottom < 0 || rect.top > windowHeight) &&
+    // Not completely to the left or right of the viewport
+    !(rect.right < 0 || rect.left > windowWidth)
   );
 }
 
@@ -380,20 +437,50 @@ function isAnyFacebookPostVisible() {
   return false;
 }
 
-// Update topbar and sidebar visibility based on visible posts
-function updateTopbarVisibility() {
+// Function to determine if any Instagram posts are visible
+function isAnyInstagramPostVisible() {
+  const instagramPosts = document.querySelectorAll('.post[data-platform="instagram"]');
+  for (const post of instagramPosts) {
+    if (isElementInViewport(post)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Function to determine if any Twitter posts are visible
+function isAnyTwitterPostVisible() {
+  const twitterPosts = document.querySelectorAll('.post[data-platform="twitter"]');
+  for (const post of twitterPosts) {
+    if (isElementInViewport(post)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Update sidebar visibility based on visible posts
+function updateSidebarVisibility() {
+  // Only show Facebook elements when Facebook posts are visible
   if (isAnyFacebookPostVisible()) {
     facebookTopbar.classList.add('visible');
     facebookSidebar.classList.add('visible');
-  } else {
+    instagramSidebar.classList.remove('visible');
+  } else if (isAnyInstagramPostVisible()) {
     facebookTopbar.classList.remove('visible');
     facebookSidebar.classList.remove('visible');
+    instagramSidebar.classList.add('visible');
+  } else {
+    // When no specific posts are visible, hide all sidebars
+    facebookTopbar.classList.remove('visible');
+    facebookSidebar.classList.remove('visible');
+    instagramSidebar.classList.remove('visible');
   }
 }
 
 // Initial check
 document.addEventListener('DOMContentLoaded', function() {
-  updateTopbarVisibility();
+  updateSidebarVisibility();
   
   // Add event listeners for account tooltip
   const accountContainer = document.querySelector('.account-container');
@@ -417,6 +504,6 @@ window.addEventListener('scroll', function() {
   
   // Use a timeout to avoid performance issues from too many calculations
   scrollTimeout = setTimeout(function() {
-    updateTopbarVisibility();
+    updateSidebarVisibility();
   }, 100);
 });
