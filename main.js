@@ -13,14 +13,14 @@ const facebookPosts = [
     shares: 12
   },
   {
-    author: "A Straight Time",
-    profilePic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQnvd8suMsKsMHAIaUsIQqNvvLS-gqKbXkDw&s",
+    author: "Steve",
+    profilePic: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Userbox_creeper.jpg?20200530135824",
     time: "5 hrs ago",
-    content: "The new SUSS campus, near Bugis, will take in some 40,000 students and learners across various courses and programmes.",
-    image: "https://cassette.sphdigital.com.sg/image/straitstimes/dcb63c10a40a623b72263994ab5f67bc8681e7b05c5aee442cfa56e188f908df?w=860",
-    likes: 543,
-    comments: 89,
-    shares: 32
+    content: "Get ready for the greatest adventure ever built. ⛏️",
+    image: "https://youtu.be/8B1EtVPBSMw?si=HeVW5gY6iIqFwJ_W",
+    likes: 512343,
+    comments: 81239,
+    shares: 32123
   }, 
   {
     author: "De Doge",
@@ -65,24 +65,7 @@ const instagramPosts = [
     caption: "Movie of the day: Big Bucket Bunny",
     comments: 156
   },
-  {
-    username: "foodie.delights",
-    profilePic: "https://i.pravatar.cc/150?img=6",
-    location: "Gourmet Kitchen",
-    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800",
-    likes: 5432,
-    caption: "Homemade pizza night! 🍕 Nothing beats the classics. #foodporn #homemade #pizza",
-    comments: 234
-  },
-  {
-    username: "fitness.goals",
-    profilePic: "https://i.pravatar.cc/150?img=7",
-    location: "Sunset Gym",
-    image: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=800",
-    likes: 3219,
-    caption: "No excuses, just results 💪 #fitness #motivation #workout",
-    comments: 178
-  },
+
   {
     username: "art.daily",
     profilePic: "https://i.pravatar.cc/150?img=8",
@@ -99,9 +82,10 @@ const tweets = [
   {
     username: "TechGuru",
     handle: "@techguru",
-    profilePic: "https://i.pravatar.cc/150?img=9",
+    profilePic: "https://img.freepik.com/free-vector/flat-design-creative-nerd-logo-template_23-2149192867.jpg",
     time: "2h",
-    content: "Just got my hands on the latest AI chip - the processing power is INSANE! 🤖 Thread incoming... (1/4)",
+    content: "Just got my hands on the latest AI chip AMD's Blackwell B200 - the processing power is INSANE! 🤖 Thread incoming... (1/4)",
+    image:"https://media.licdn.com/dms/image/v2/D4E12AQGdbWXucNsEoQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1710839851926?e=1746662400&v=beta&t=Za4SXlZnaEBv1ecdSVvsLJob9_GOQhs_6rJQf8G74a4",
     likes: 1523,
     retweets: 421,
     replies: 89
@@ -373,6 +357,11 @@ function generateAppHTML() {
           ...tweets
         ].map((post, index) => {
           if (index < facebookPosts.length) {
+            const isRegularVideo = post.image && (post.image.includes('.mp4') || post.image.includes('.webm'));
+            const isYouTubeVideo = post.image && isYouTubeLink(post.image);
+            const isFacebookVideo = post.image && isFacebookVideoLink(post.image);
+            const isTwitterVideo = post.image && isTwitterVideoLink(post.image);
+            
             return `
               <div class="post facebook-post" data-platform="facebook">
                 <div class="post-header">
@@ -385,7 +374,42 @@ function generateAppHTML() {
                 <div class="post-content">
                   <p>${post.content}</p>
                 </div>
-                <img src="${post.image}" alt="Post image" class="post-image">
+                ${isYouTubeVideo ? `
+                  <div class="youtube-container">
+                    <iframe 
+                      class="post-image youtube-embed" 
+                      src="https://www.youtube.com/embed/${extractYouTubeVideoId(post.image)}" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen>
+                    </iframe>
+                  </div>
+                ` : isFacebookVideo ? `
+                  <div class="facebook-embed-container">
+                    <iframe 
+                      src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(extractFacebookVideoEmbed(post.image))}&show_text=false" 
+                      class="facebook-video-embed"
+                      scrolling="no" 
+                      frameborder="0" 
+                      allowfullscreen="true" 
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                    </iframe>
+                  </div>
+                ` : isTwitterVideo ? `
+                  <div class="twitter-embed-container">
+                    <blockquote class="twitter-tweet">
+                      <a href="${post.image}"></a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                  </div>
+                ` : isRegularVideo ? `
+                  <video class="post-image video-post" controls playsinline>
+                    <source src="${post.image}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                ` : post.image ? `
+                  <img src="${post.image}" alt="Post image" class="post-image">
+                ` : ''}
                 <div class="post-actions facebook-actions">
                   <button class="action-button">
                     <i class="far fa-thumbs-up"></i>
@@ -464,6 +488,11 @@ function generateAppHTML() {
           } else {
             const tweetIndex = index - (facebookPosts.length + instagramPosts.length);
             const tweet = tweets[tweetIndex];
+            const isRegularVideo = tweet.image && (tweet.image.includes('.mp4') || tweet.image.includes('.webm'));
+            const isYouTubeVideo = tweet.image && isYouTubeLink(tweet.image);
+            const isFacebookVideo = tweet.image && isFacebookVideoLink(tweet.image);
+            const isTwitterVideo = tweet.image && isTwitterVideoLink(tweet.image);
+            
             return `
               <div class="post tweet" data-platform="twitter">
                 <div class="post-header">
@@ -478,7 +507,42 @@ function generateAppHTML() {
                 </div>
                 <div class="tweet-content">
                   <p>${tweet.content}</p>
-                  ${tweet.image ? `<img src="${tweet.image}" alt="Tweet image" class="tweet-image">` : ''}
+                  ${isYouTubeVideo ? `
+                    <div class="youtube-container">
+                      <iframe 
+                        class="post-image youtube-embed" 
+                        src="https://www.youtube.com/embed/${extractYouTubeVideoId(tweet.image)}" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                      </iframe>
+                    </div>
+                  ` : isFacebookVideo ? `
+                    <div class="facebook-embed-container">
+                      <iframe 
+                        src="https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(extractFacebookVideoEmbed(tweet.image))}&show_text=false" 
+                        class="facebook-video-embed"
+                        scrolling="no" 
+                        frameborder="0" 
+                        allowfullscreen="true" 
+                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                      </iframe>
+                    </div>
+                  ` : isTwitterVideo ? `
+                    <div class="twitter-embed-container">
+                      <blockquote class="twitter-tweet">
+                        <a href="${tweet.image}"></a>
+                      </blockquote>
+                      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </div>
+                  ` : isRegularVideo ? `
+                    <video class="post-image video-post" controls playsinline>
+                      <source src="${tweet.image}" type="video/mp4">
+                      Your browser does not support the video tag.
+                    </video>
+                  ` : tweet.image ? `
+                    <img src="${tweet.image}" alt="Tweet image" class="tweet-image">
+                  ` : ''}
                 </div>
                 <div class="tweet-actions">
                   <div class="tweet-action-container">
@@ -536,18 +600,34 @@ function attachEventListeners() {
   const aiButton = document.querySelector('.ai-button');
   if (aiButton) {
     aiButton.addEventListener('click', () => {
-      // Prompt user for YouTube link
-      const youtubeLink = prompt('Enter a YouTube link:');
+      // Prompt user for video link
+      const videoLinkPrompt = prompt('Enter a video link (YouTube, Facebook, or Twitter):');
       
-      if (youtubeLink && isYouTubeLink(youtubeLink)) {
-        // Create a new Instagram post with the YouTube link
+      if (!videoLinkPrompt) return;
+      
+      let platformType = 'other';
+      let validLink = false;
+      
+      if (isYouTubeLink(videoLinkPrompt)) {
+        platformType = 'YouTube';
+        validLink = true;
+      } else if (isFacebookVideoLink(videoLinkPrompt)) {
+        platformType = 'Facebook';
+        validLink = true;
+      } else if (isTwitterVideoLink(videoLinkPrompt)) {
+        platformType = 'Twitter';
+        validLink = true;
+      }
+      
+      if (validLink) {
+        // Create a new Instagram post with the video link
         const newPost = {
           username: "user.generated",
           profilePic: "https://i.pravatar.cc/150?img=1", // Default avatar
-          location: "YouTube Share",
-          image: youtubeLink,
+          location: `${platformType} Share`,
+          image: videoLinkPrompt,
           likes: Math.floor(Math.random() * 1000) + 100, // Random likes
-          caption: "Check out this YouTube video I found! #youtube #share",
+          caption: `Check out this ${platformType} video I found! #${platformType.toLowerCase()} #share`,
           comments: Math.floor(Math.random() * 100) + 10 // Random comments
         };
         
@@ -568,8 +648,8 @@ function attachEventListeners() {
         
         // Scroll to the top to show the new post
         window.scrollTo(0, 0);
-      } else if (youtubeLink) {
-        alert('Please enter a valid YouTube link (e.g., https://youtu.be/... or https://www.youtube.com/watch?v=...)');
+      } else {
+        alert('Please enter a valid video link from YouTube, Facebook, or Twitter');
       }
     });
   }
@@ -648,6 +728,17 @@ function isYouTubeLink(url) {
   return url.includes('youtube.com/') || url.includes('youtu.be/');
 }
 
+// Function to check if a URL is a Facebook video link
+function isFacebookVideoLink(url) {
+  return url.includes('facebook.com/') && 
+         (url.includes('/videos/') || url.includes('/watch/') || url.includes('/watch?v='));
+}
+
+// Function to check if a URL is a Twitter video link
+function isTwitterVideoLink(url) {
+  return (url.includes('twitter.com/') || url.includes('x.com/')) && url.includes('/status/');
+}
+
 // Function to extract YouTube video ID from various YouTube URL formats
 function extractYouTubeVideoId(url) {
   let videoId = '';
@@ -681,6 +772,33 @@ function extractYouTubeVideoId(url) {
   }
   
   return videoId;
+}
+
+// Function to extract Facebook video ID or URL for embedding
+function extractFacebookVideoEmbed(url) {
+  // Facebook embed URLs need the full URL, sometimes with modifications
+  // Strip any tracking parameters for cleaner URLs
+  let cleanUrl = url.split('?')[0];
+  
+  // Ensure the URL ends with no trailing slash for consistency
+  if (cleanUrl.endsWith('/')) {
+    cleanUrl = cleanUrl.slice(0, -1);
+  }
+  
+  return cleanUrl;
+}
+
+// Function to extract Twitter tweet ID for embedding
+function extractTwitterTweetId(url) {
+  // Twitter/X embed URLs need the status ID
+  const regex = /(?:twitter\.com|x\.com)\/\w+\/status\/(\d+)/;
+  const match = url.match(regex);
+  
+  if (match && match[1]) {
+    return match[1];
+  }
+  
+  return '';
 }
 
 // Function to determine if any Facebook posts are visible
