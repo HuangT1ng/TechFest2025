@@ -6,9 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server.js",
+    "watch": "nodemon --watch '**/*' -e js,html,css --exec 'npm run build && npm start'"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
   },
   "devDependencies": {
-    "vite": "^5.4.2"
+    "nodemon": "^3.1.9",
+    "vite": "^5.4.14"
   }
 }

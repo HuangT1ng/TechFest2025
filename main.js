@@ -172,7 +172,7 @@ document.querySelector('#app').innerHTML = `
         <span class="tooltip">Notifications</span>
       </div>
       <div class="topbar-icon-container account-container">
-        <img src="images/images.jpeg" alt="Account" class="account-image">
+        <img src="/images/images.jpeg" alt="Account" class="account-image">
         <span class="tooltip">Account</span>
       </div>
     </div>
@@ -180,7 +180,7 @@ document.querySelector('#app').innerHTML = `
   
   <div class="facebook-sidebar">
     <div class="sidebar-item">
-      <img src="images/images.jpeg" alt="Your Profile" class="sidebar-icon profile-icon">
+      <img src="/images/images.jpeg" alt="Your Profile" class="sidebar-icon profile-icon">
       <span class="sidebar-text">Huang Ting</span>
     </div>
     <div class="sidebar-item">
@@ -266,7 +266,7 @@ document.querySelector('#app').innerHTML = `
       <span class="sidebar-text">Create</span>
     </div>
     <div class="sidebar-item instagram-item">
-      <img src="images/images.jpeg" alt="Your Profile" class="sidebar-icon profile-icon">
+      <img src="/images/images.jpeg" alt="Your Profile" class="sidebar-icon profile-icon">
       <span class="sidebar-text">Profile</span>
     </div>
     <div class="sidebar-divider"></div>
