@@ -2,6 +2,11 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { extractFacebookPosts } from './extractors/facebookExtractor.js';
+import { extractTwitterPosts } from './extractors/twitterExtractor.js';
+import { extractInstagramPosts } from './extractors/instagramExtractor.js';
+import { processSocialMediaContent } from './processors/processSocialMediaContent.js';
+import { formatData } from './utils/dataFormatter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +35,10 @@ mainApp.get('*', (req, res) => {
 facebookApp.use(express.static(path.join(__dirname, 'facebook')));
 facebookApp.use('/images', express.static(path.join(__dirname, 'images')));
 facebookApp.get('*', (req, res) => {
+  console.log('Facebook page accessed, extracting posts...');
+  const posts = extractFacebookPosts();
+  const formattedPosts = formatData(posts, 'facebook');
+  processSocialMediaContent(formattedPosts);
   res.sendFile(path.join(__dirname, 'facebook', 'facebook.html'));
 });
 
@@ -37,6 +46,10 @@ facebookApp.get('*', (req, res) => {
 instagramApp.use(express.static(path.join(__dirname, 'instagram')));
 instagramApp.use('/images', express.static(path.join(__dirname, 'images')));
 instagramApp.get('*', (req, res) => {
+  console.log('Instagram page accessed, extracting posts...');
+  const posts = extractInstagramPosts();
+  const formattedPosts = formatData(posts, 'instagram');
+  processSocialMediaContent(formattedPosts);
   res.sendFile(path.join(__dirname, 'instagram', 'instagram.html'));
 });
 
@@ -44,6 +57,10 @@ instagramApp.get('*', (req, res) => {
 twitterApp.use(express.static(path.join(__dirname, 'twitter')));
 twitterApp.use('/images', express.static(path.join(__dirname, 'images')));
 twitterApp.get('*', (req, res) => {
+  console.log('Twitter page accessed, extracting posts...');
+  const posts = extractTwitterPosts();
+  const formattedPosts = formatData(posts, 'twitter');
+  processSocialMediaContent(formattedPosts);
   res.sendFile(path.join(__dirname, 'twitter', 'twitter.html'));
 });
 
