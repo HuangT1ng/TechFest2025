@@ -287,6 +287,15 @@ function generateAppHTML() {
             const isFacebookVideo = post.image && isFacebookVideoLink(post.image);
             const isTwitterVideo = post.image && isTwitterVideoLink(post.image);
             
+            // Escape HTML in content
+            const escapedContent = post.content.replace(/[&<>"']/g, char => ({
+              '&': '&amp;',
+              '<': '&lt;',
+              '>': '&gt;',
+              '"': '&quot;',
+              "'": '&#39;'
+            }[char]));
+            
             return `
               <div class="post facebook-post" data-platform="facebook">
                 <div class="post-header">
@@ -296,8 +305,8 @@ function generateAppHTML() {
                     <p class="post-time">${post.time} 🌐</p>
                   </div>
                 </div>
-                <div class="post-content">
-                  <p>${post.content}</p>
+                <div class="post-content" data-content="${escapedContent}">
+                  <p>${escapedContent}</p>
                 </div>
                 ${isYouTubeVideo ? `
                   <div class="youtube-container">
@@ -495,7 +504,7 @@ function generateAppHTML() {
       </div>
     </div>
   </div>
-  <button class="ai-button">AI</button>
+  <button class="ai-button" title="Toggle AI Analysis">AI</button>
 `;
 }
 
@@ -524,59 +533,7 @@ function attachEventListeners() {
   // Re-attach AI button event listener
   const aiButton = document.querySelector('.ai-button');
   if (aiButton) {
-    aiButton.addEventListener('click', () => {
-      // Prompt user for video link
-      const videoLinkPrompt = prompt('Enter a video link (YouTube, Facebook, or Twitter):');
-      
-      if (!videoLinkPrompt) return;
-      
-      let platformType = 'other';
-      let validLink = false;
-      
-      if (isYouTubeLink(videoLinkPrompt)) {
-        platformType = 'YouTube';
-        validLink = true;
-      } else if (isFacebookVideoLink(videoLinkPrompt)) {
-        platformType = 'Facebook';
-        validLink = true;
-      } else if (isTwitterVideoLink(videoLinkPrompt)) {
-        platformType = 'Twitter';
-        validLink = true;
-      }
-      
-      if (validLink) {
-        // Create a new Instagram post with the video link
-        const newPost = {
-          username: "user.generated",
-          profilePic: "https://i.pravatar.cc/150?img=1", // Default avatar
-          location: `${platformType} Share`,
-          image: videoLinkPrompt,
-          likes: Math.floor(Math.random() * 1000) + 100, // Random likes
-          caption: `Check out this ${platformType} video I found! #${platformType.toLowerCase()} #share`,
-          comments: Math.floor(Math.random() * 100) + 10 // Random comments
-        };
-        
-        // Add the new post to the beginning of Instagram posts
-        instagramPosts.unshift(newPost);
-        
-        // Re-render the feed
-        document.getElementById('app').innerHTML = generateAppHTML();
-        
-        // Give the browser a moment to render the DOM before updating sidebar visibility
-        setTimeout(() => {
-          // Re-attach event listeners
-          attachEventListeners();
-          
-          // Update sidebar visibility
-          updateSidebarVisibility();
-        }, 100);
-        
-        // Scroll to the top to show the new post
-        window.scrollTo(0, 0);
-      } else {
-        alert('Please enter a valid video link from YouTube, Facebook, or Twitter');
-      }
-    });
+    aiButton.addEventListener('click', toggleHighlighting);
   }
 }
 
@@ -772,4 +729,303 @@ function isElementInViewport(el) {
     // Not completely to the left or right of the viewport
     !(rect.right < 0 || rect.left > windowWidth)
   );
+}
+
+let isHighlightingEnabled = false;
+
+async function toggleHighlighting() {
+  try {
+    isHighlightingEnabled = !isHighlightingEnabled;
+    
+    // Update AI button state
+    const aiButton = document.querySelector('.ai-button');
+    if (aiButton) {
+      aiButton.classList.toggle('active', isHighlightingEnabled);
+    }
+    
+    if (!isHighlightingEnabled) {
+      // Remove all highlights
+      document.querySelectorAll('.highlighted-content, .highlighted-image').forEach(el => {
+        if (el.classList.contains('highlighted-content')) {
+          const parent = el.parentNode;
+          parent.replaceChild(document.createTextNode(el.textContent), el);
+        } else {
+          el.classList.remove('highlighted-image');
+          el.removeEventListener('click', el.clickHandler);
+        }
+      });
+      return;
+    }
+
+    // Use the full path to ensure we hit the API endpoint
+    const response = await fetch('/api/analysis');
+    if (!response.ok) {
+      throw new Error(`Analysis not available: ${response.statusText}`);
+    }
+    
+    const analysisResults = await response.json();
+    // Add console logging to debug the results
+    console.log('Analysis results received:', analysisResults);
+    
+    if (!Array.isArray(analysisResults) || analysisResults.length === 0) {
+      throw new Error('No analysis results available');
+    }
+
+    // Apply highlighting using these results
+    applyHighlights(analysisResults);
+  } catch (error) {
+    console.error('Failed to get analysis:', error);
+    // Reset the highlighting state since it failed
+    isHighlightingEnabled = false;
+    // Update AI button state on error
+    const aiButton = document.querySelector('.ai-button');
+    if (aiButton) {
+      aiButton.classList.remove('active');
+    }
+    // Show error to user
+    alert('Failed to load analysis results. Please try again later.');
+  }
+}
+
+function applyHighlights(results) {
+  // Remove existing highlights
+  document.querySelectorAll('.highlighted-content, .highlighted-image').forEach(el => {
+    if (el.classList.contains('highlighted-content')) {
+      const parent = el.parentNode;
+      parent.replaceChild(document.createTextNode(el.textContent), el);
+    } else {
+      el.classList.remove('highlighted-image');
+      el.removeEventListener('click', el.clickHandler);
+    }
+  });
+
+  // Create popup if it doesn't exist
+  let popup = document.querySelector('.analysis-popup');
+
+  if (!popup) {
+    popup = document.createElement('div');
+    popup.className = 'analysis-popup';
+    document.body.appendChild(popup);
+    
+    // Add styles for highlighting text and underlining images
+    const style = document.createElement('style');
+    style.textContent = `
+      .highlighted-content {
+        background-color: rgba(255, 255, 17, 0.76);
+        cursor: pointer;
+        padding: 2px 0;
+      }
+      
+      .highlighted-image {
+        position: relative !important;
+        cursor: pointer;
+        margin-bottom: 3px;
+      }
+
+      .highlighted-image::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        width: 100%;
+        height: 3px;
+        background-color: #ff4444;
+      }
+
+      .source-links {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+      }
+
+      .source-button {
+        display: block;
+        padding: 8px 12px;
+        background-color: #f0f2f5;
+        border-radius: 6px;
+        color: #1877f2;
+        text-decoration: none;
+        font-size: 14px;
+        transition: background-color 0.2s;
+      }
+
+      .source-button:hover {
+        background-color: #e4e6eb;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // Process Facebook posts
+  const facebookPosts = document.querySelectorAll('.post-content[data-content]');
+  
+  results.forEach(result => {
+    if (!result.text_analysis?.false_content && !result.image_analysis?.image) return;
+
+    // Find matching post content
+    facebookPosts.forEach(postContent => {
+      const postText = postContent.getAttribute('data-content');
+      
+      // Check if this post matches the result content
+      if (postText.includes(result.text_analysis?.false_content)) {
+        // Handle text content
+        const contentWrapper = postContent.querySelector('p');
+        if (contentWrapper && result.text_analysis && result.text_analysis.classification.toLowerCase() === 'false') {
+          const falseContent = result.text_analysis.false_content;
+          const contentHtml = contentWrapper.innerHTML;
+          const highlightedHtml = contentHtml.replace(
+            falseContent,
+            `<span class="highlighted-content" data-classification="${result.text_analysis.classification}">${falseContent}</span>`
+          );
+          contentWrapper.innerHTML = highlightedHtml;
+
+          // Add click handler for highlighted text
+          const highlightedElement = contentWrapper.querySelector('.highlighted-content');
+          if (highlightedElement) {
+            const showTextPopup = () => {
+              // Update popup content for text analysis
+              popup.innerHTML = `
+                <div class="popup-header">
+                  <div class="header-content">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Text Classification Result</h3>
+                  </div>
+                </div>
+                <div class="popup-content">
+                  <div class="main-result">
+                    <h2>${result.text_analysis.classification}</h2>
+                    <span class="confidence-badge">95% Confidence</span>
+                  </div>
+                  <div class="explanation-section">
+                    <div class="section-header">
+                      <i class="fas fa-book"></i>
+                      <h4>Explanation</h4>
+                    </div>
+                    <p>${result.text_analysis.explanation}</p>
+                  </div>
+                  ${result.text_analysis['cross_validation sources'] ? `
+                    <div class="sources-section">
+                      <div class="section-header">
+                        <i class="fas fa-link"></i>
+                        <h4>Sources</h4>
+                      </div>
+                      <div class="source-links">
+                        ${result.text_analysis['cross_validation sources'].map(source => `
+                          <a href="${source}" class="source-button" target="_blank" rel="noopener noreferrer">${source}</a>
+                        `).join('')}
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
+                <div class="popup-footer">
+                  <button class="close-button">Close</button>
+                </div>
+              `;
+              
+              popup.classList.add('active');
+              
+              const closeButton = popup.querySelector('.close-button');
+              closeButton.addEventListener('click', () => {
+                popup.classList.remove('active');
+              });
+
+              const handleEscape = (e) => {
+                if (e.key === 'Escape') {
+                  popup.classList.remove('active');
+                  document.removeEventListener('keydown', handleEscape);
+                }
+              };
+              document.addEventListener('keydown', handleEscape);
+            };
+
+            highlightedElement.clickHandler = showTextPopup;
+            highlightedElement.addEventListener('click', showTextPopup);
+          }
+        }
+
+        // Handle images
+        if (result.image_analysis && result.image_analysis.classification.toLowerCase() === 'false') {
+          const postImages = postContent.parentElement.querySelectorAll('img.post-image, img.tweet-image');
+          postImages.forEach(image => {
+            if (image.src === result.image_analysis.image) {
+              image.classList.add('highlighted-image');
+              
+              // Create click handler function for image
+              const showImagePopup = () => {
+                // Update popup content for image analysis
+                popup.innerHTML = `
+                  <div class="popup-header">
+                    <div class="header-content">
+                      <i class="fas fa-info-circle"></i>
+                      <h3>Image Classification Result</h3>
+                    </div>
+                  </div>
+                  <div class="popup-content">
+                    <div class="main-result">
+                      <h2>${result.image_analysis.classification}</h2>
+                      <span class="confidence-badge">95% Confidence</span>
+                    </div>
+                    <div class="explanation-section">
+                      <div class="section-header">
+                        <i class="fas fa-book"></i>
+                        <h4>Explanation</h4>
+                      </div>
+                      <p>${result.image_analysis.explanation}</p>
+                    </div>
+                    ${result.image_analysis['cross_validation sources'] ? `
+                      <div class="sources-section">
+                        <div class="section-header">
+                          <i class="fas fa-link"></i>
+                          <h4>Sources</h4>
+                        </div>
+                        <div class="source-links">
+                          ${result.image_analysis['cross_validation sources'].map(source => `
+                            <a href="${source}" class="source-button" target="_blank" rel="noopener noreferrer">${source}</a>
+                          `).join('')}
+                        </div>
+                      </div>
+                    ` : ''}
+                  </div>
+                  <div class="popup-footer">
+                    <button class="close-button">Close</button>
+                  </div>
+                `;
+                
+                popup.classList.add('active');
+                
+                const closeButton = popup.querySelector('.close-button');
+                closeButton.addEventListener('click', () => {
+                  popup.classList.remove('active');
+                });
+
+                const handleEscape = (e) => {
+                  if (e.key === 'Escape') {
+                    popup.classList.remove('active');
+                    document.removeEventListener('keydown', handleEscape);
+                  }
+                };
+                document.addEventListener('keydown', handleEscape);
+              };
+
+              image.clickHandler = showImagePopup;
+              image.addEventListener('click', showImagePopup);
+            }
+          });
+        }
+      }
+    });
+  });
+}
+
+// Helper function to escape special characters in regex
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Function to safely decode HTML entities
+function decodeHtml(html) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = html;
+  return txt.value;
 }
