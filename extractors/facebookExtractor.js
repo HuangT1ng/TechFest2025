@@ -17,6 +17,8 @@ export function extractFacebookPosts() {
     
     if (match && match[1]) {
       const postsArray = eval(match[1]);
+      console.log('Extracted Facebook posts:', JSON.stringify(postsArray, null, 2));
+
       console.log(`Successfully extracted ${postsArray.length} Facebook posts`);
       return postsArray;
     } else {
