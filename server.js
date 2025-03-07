@@ -67,7 +67,17 @@ facebookApp.get('/', async (req, res) => {
 // Configure Instagram server
 instagramApp.use(express.static(path.join(__dirname, 'instagram')));
 instagramApp.use('/images', express.static(path.join(__dirname, 'images')));
-instagramApp.get('*', async (req, res) => {
+
+// API routes should come before the catch-all route
+instagramApp.get('/api/analysis', (req, res) => {
+  if (!cachedInstagramResults) {
+    return res.status(404).json({ error: 'No Instagram analysis available' });
+  }
+  res.json(cachedInstagramResults);
+});
+
+// Serve the HTML page only for the root route
+instagramApp.get('/', async (req, res) => {
   try {
     console.log('Instagram page accessed, extracting posts...');
     const posts = extractInstagramPosts();
@@ -87,17 +97,20 @@ instagramApp.get('*', async (req, res) => {
   }
 });
 
-instagramApp.get('/api/analysis', (req, res) => {
-  if (!cachedInstagramResults) {
-    return res.status(404).json({ error: 'No Instagram analysis available' });
-  }
-  res.json(cachedInstagramResults);
-});
-
 // Configure Twitter server
 twitterApp.use(express.static(path.join(__dirname, 'twitter')));
 twitterApp.use('/images', express.static(path.join(__dirname, 'images')));
-twitterApp.get('*', async (req, res) => {
+
+// API routes should come before the catch-all route
+twitterApp.get('/api/analysis', (req, res) => {
+  if (!cachedTwitterResults) {
+    return res.status(404).json({ error: 'No Twitter analysis available' });
+  }
+  res.json(cachedTwitterResults);
+});
+
+// Serve the HTML page only for the root route
+twitterApp.get('/', async (req, res) => {
   try {
     console.log('Twitter page accessed, extracting posts...');
     const posts = extractTwitterPosts();
@@ -115,13 +128,6 @@ twitterApp.get('*', async (req, res) => {
     console.error('Twitter processing failed:', error);
     res.status(500).send('Analysis failed');
   }
-});
-
-twitterApp.get('/api/analysis', (req, res) => {
-  if (!cachedTwitterResults) {
-    return res.status(404).json({ error: 'No Twitter analysis available' });
-  }
-  res.json(cachedTwitterResults);
 });
 
 // Process posts using Python

@@ -36,6 +36,249 @@ const instagramPosts = [
 // Twitter Posts
 const tweets = [];
 
+let isHighlightingEnabled = false;
+
+async function toggleHighlighting() {
+  try {
+    isHighlightingEnabled = !isHighlightingEnabled;
+    
+    // Update AI button state
+    const aiButton = document.querySelector('.ai-button');
+    if (aiButton) {
+      aiButton.classList.toggle('active', isHighlightingEnabled);
+    }
+    
+    if (!isHighlightingEnabled) {
+      // Remove all highlights
+      document.querySelectorAll('.highlighted-content, .highlighted-image').forEach(el => {
+        if (el.classList.contains('highlighted-content')) {
+          const parent = el.parentNode;
+          parent.replaceChild(document.createTextNode(el.textContent), el);
+        } else {
+          el.classList.remove('highlighted-image');
+          el.removeEventListener('click', el.clickHandler);
+        }
+      });
+      return;
+    }
+
+    // Use the full path to ensure we hit the API endpoint
+    const response = await fetch('/api/analysis');
+    if (!response.ok) {
+      throw new Error(`Analysis not available: ${response.statusText}`);
+    }
+    
+    const analysisResults = await response.json();
+    // Add console logging to debug the results
+    console.log('Analysis results received:', analysisResults);
+    
+    if (!Array.isArray(analysisResults) || analysisResults.length === 0) {
+      throw new Error('No analysis results available');
+    }
+
+    // Apply highlighting using these results
+    applyHighlights(analysisResults);
+  } catch (error) {
+    console.error('Failed to get analysis:', error);
+    // Reset the highlighting state since it failed
+    isHighlightingEnabled = false;
+    // Update AI button state on error
+    const aiButton = document.querySelector('.ai-button');
+    if (aiButton) {
+      aiButton.classList.remove('active');
+    }
+    // Show error to user
+    alert('Failed to load analysis results. Please try again later.');
+  }
+}
+
+function applyHighlights(results) {
+  // Remove existing highlights
+  document.querySelectorAll('.highlighted-content, .highlighted-image').forEach(el => {
+    if (el.classList.contains('highlighted-content')) {
+      const parent = el.parentNode;
+      parent.replaceChild(document.createTextNode(el.textContent), el);
+    } else {
+      el.classList.remove('highlighted-image');
+      el.removeEventListener('click', el.clickHandler);
+    }
+  });
+
+  // Create popup if it doesn't exist
+  let popup = document.querySelector('.analysis-popup');
+  if (!popup) {
+    popup = document.createElement('div');
+    popup.className = 'analysis-popup';
+    document.body.appendChild(popup);
+  }
+
+  // Process Instagram posts
+  const instagramPosts = document.querySelectorAll('.instagram-post');
+  
+  results.forEach(result => {
+    if (!result.text_analysis?.false_content && !result.image_analysis?.image) return;
+
+    instagramPosts.forEach(post => {
+      const caption = post.querySelector('.post-caption');
+      if (!caption) return;
+
+      const username = caption.querySelector('.username')?.textContent || '';
+      const captionText = caption.textContent.replace(username, '').trim();
+      
+      // Handle text content
+      if (result.text_analysis && 
+          result.text_analysis.classification.toLowerCase() === 'false' && 
+          captionText.includes(result.text_analysis.false_content)) {
+        const falseContent = result.text_analysis.false_content;
+        const highlightedHtml = `<span class="username">${username}</span> ${captionText.replace(
+          falseContent,
+          `<span class="highlighted-content" data-classification="${result.text_analysis.classification}">${falseContent}</span>`
+        )}`;
+        caption.innerHTML = highlightedHtml;
+
+        // Add click handler for highlighted text
+        const highlightedElement = caption.querySelector('.highlighted-content');
+        if (highlightedElement) {
+          highlightedElement.addEventListener('click', () => {
+            popup.innerHTML = `
+              <div class="popup-header">
+                <div class="header-content">
+                  <i class="fas fa-info-circle"></i>
+                  <h3>Text Classification Result</h3>
+                </div>
+              </div>
+              <div class="popup-content">
+                <div class="main-result">
+                  <h2>${result.text_analysis.classification}</h2>
+                  <span class="confidence-badge">95% Confidence</span>
+                </div>
+                <div class="explanation-section">
+                  <div class="section-header">
+                    <i class="fas fa-book"></i>
+                    <h4>Explanation</h4>
+                  </div>
+                  <p>${result.text_analysis.explanation}</p>
+                </div>
+                ${result.text_analysis['cross_validation sources'] ? `
+                  <div class="sources-section">
+                    <div class="section-header">
+                      <i class="fas fa-link"></i>
+                      <h4>Sources</h4>
+                    </div>
+                    <div class="source-links">
+                      ${result.text_analysis['cross_validation sources'].map(source => `
+                        <a href="${source}" class="source-button" target="_blank" rel="noopener noreferrer">${source}</a>
+                      `).join('')}
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+              <div class="popup-footer">
+                <button class="close-button">Close</button>
+              </div>
+            `;
+            
+            popup.classList.add('active');
+            
+            // Add close button functionality
+            const closeButton = popup.querySelector('.close-button');
+            closeButton.addEventListener('click', () => {
+              popup.classList.remove('active');
+            });
+
+            // Add escape key functionality
+            const handleEscape = (e) => {
+              if (e.key === 'Escape') {
+                popup.classList.remove('active');
+                document.removeEventListener('keydown', handleEscape);
+              }
+            };
+            document.addEventListener('keydown', handleEscape);
+          });
+        }
+      }
+
+      // Handle images and videos
+      if (result.image_analysis && result.image_analysis.classification.toLowerCase() === 'false') {
+        const mediaElements = post.querySelectorAll('img.post-image, .youtube-container iframe, video.post-image');
+        mediaElements.forEach(media => {
+          let mediaUrl = media.src;
+          if (media.tagName.toLowerCase() === 'iframe') {
+            mediaUrl = media.src.includes('youtube.com/embed/') ? 
+              'https://youtu.be/' + media.src.split('/').pop() :
+              media.src;
+          }
+          
+          if (mediaUrl === result.image_analysis.image) {
+            const elementToHighlight = media.tagName.toLowerCase() === 'iframe' ? 
+              media.closest('.youtube-container') : 
+              media;
+            
+            elementToHighlight.classList.add('highlighted-image');
+            
+            elementToHighlight.addEventListener('click', () => {
+              popup.innerHTML = `
+                <div class="popup-header">
+                  <div class="header-content">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>Media Classification Result</h3>
+                  </div>
+                </div>
+                <div class="popup-content">
+                  <div class="main-result">
+                    <h2>${result.image_analysis.classification}</h2>
+                    <span class="confidence-badge">95% Confidence</span>
+                  </div>
+                  <div class="explanation-section">
+                    <div class="section-header">
+                      <i class="fas fa-book"></i>
+                      <h4>Explanation</h4>
+                    </div>
+                    <p>${result.image_analysis.explanation}</p>
+                  </div>
+                  ${result.image_analysis['cross_validation sources'] ? `
+                    <div class="sources-section">
+                      <div class="section-header">
+                        <i class="fas fa-link"></i>
+                        <h4>Sources</h4>
+                      </div>
+                      <div class="source-links">
+                        ${result.image_analysis['cross_validation sources'].map(source => `
+                          <a href="${source}" class="source-button" target="_blank" rel="noopener noreferrer">${source}</a>
+                        `).join('')}
+                      </div>
+                    </div>
+                  ` : ''}
+                </div>
+                <div class="popup-footer">
+                  <button class="close-button">Close</button>
+                </div>
+              `;
+              
+              popup.classList.add('active');
+              
+              // Add close button functionality
+              const closeButton = popup.querySelector('.close-button');
+              closeButton.addEventListener('click', () => {
+                popup.classList.remove('active');
+              });
+
+              // Add escape key functionality
+              const handleEscape = (e) => {
+                if (e.key === 'Escape') {
+                  popup.classList.remove('active');
+                  document.removeEventListener('keydown', handleEscape);
+                }
+              };
+              document.addEventListener('keydown', handleEscape);
+            });
+          }
+        });
+      }
+    });
+  });
+}
+
 // Function to generate the app HTML
 function generateAppHTML() {
   return `
@@ -511,59 +754,7 @@ function attachEventListeners() {
   // Re-attach AI button event listener
   const aiButton = document.querySelector('.ai-button');
   if (aiButton) {
-    aiButton.addEventListener('click', () => {
-      // Prompt user for video link
-      const videoLinkPrompt = prompt('Enter a video link (YouTube, Facebook, or Twitter):');
-      
-      if (!videoLinkPrompt) return;
-      
-      let platformType = 'other';
-      let validLink = false;
-      
-      if (isYouTubeLink(videoLinkPrompt)) {
-        platformType = 'YouTube';
-        validLink = true;
-      } else if (isFacebookVideoLink(videoLinkPrompt)) {
-        platformType = 'Facebook';
-        validLink = true;
-      } else if (isTwitterVideoLink(videoLinkPrompt)) {
-        platformType = 'Twitter';
-        validLink = true;
-      }
-      
-      if (validLink) {
-        // Create a new Instagram post with the video link
-        const newPost = {
-          username: "user.generated",
-          profilePic: "https://i.pravatar.cc/150?img=1", // Default avatar
-          location: `${platformType} Share`,
-          image: videoLinkPrompt,
-          likes: Math.floor(Math.random() * 1000) + 100, // Random likes
-          caption: `Check out this ${platformType} video I found! #${platformType.toLowerCase()} #share`,
-          comments: Math.floor(Math.random() * 100) + 10 // Random comments
-        };
-        
-        // Add the new post to the beginning of Instagram posts
-        instagramPosts.unshift(newPost);
-        
-        // Re-render the feed
-        document.getElementById('app').innerHTML = generateAppHTML();
-        
-        // Give the browser a moment to render the DOM before updating sidebar visibility
-        setTimeout(() => {
-          // Re-attach event listeners
-          attachEventListeners();
-          
-          // Update sidebar visibility
-          updateSidebarVisibility();
-        }, 100);
-        
-        // Scroll to the top to show the new post
-        window.scrollTo(0, 0);
-      } else {
-        alert('Please enter a valid video link from YouTube, Facebook, or Twitter');
-      }
-    });
+    aiButton.addEventListener('click', toggleHighlighting);
   }
 }
 

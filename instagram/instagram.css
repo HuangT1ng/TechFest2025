@@ -346,7 +346,7 @@ body {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #0078FF;
+  background-color: #E1306C;  /* Instagram brand color */
   color: white;
   display: flex;
   align-items: center;
@@ -357,14 +357,186 @@ body {
   border: none;
   cursor: pointer;
   z-index: 1000;
-  transition: transform 0.2s, box-shadow 0.2s;
-  opacity: 1;
-  pointer-events: auto;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+  opacity: 0.7;
 }
 
 .ai-button:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  opacity: 1;
+}
+
+.ai-button.active {
+  background-color: #C13584;  /* Instagram gradient color */
+  opacity: 1;
+}
+
+/* Analysis Popup Styles */
+.analysis-popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 360px;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.analysis-popup.active {
+  display: block;
+  opacity: 1;
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #dddfe2;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.header-content i {
+  color: #E1306C;
+  font-size: 20px;
+}
+
+.popup-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #202124;
+}
+
+.close-popup {
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.close-popup i {
+  font-size: 20px;
+  color: #65676b;
+}
+
+.close-popup:hover {
+  background-color: #f2f2f2;
+}
+
+.popup-content {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 60px);
+}
+
+.main-result {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.main-result h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #dc3545;
+}
+
+.confidence-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #e8f0fe;
+  color: #dc3545;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.section-header i {
+  color: #E1306C;  /* Instagram brand color */
+}
+
+.section-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #1c1e21;
+  font-weight: 600;
+}
+
+.explanation-section {
+  margin-bottom: 24px;
+}
+
+.explanation-section p {
+  margin: 0;
+  color: #65676b;
+  line-height: 1.5;
+}
+
+.sources-section {
+  margin-top: 24px;
+}
+
+.source-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.source-button {
+  display: block;
+  padding: 8px 12px;
+  background-color: #f0f2f5;
+  border-radius: 6px;
+  color: #E1306C;  /* Instagram brand color */
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.source-button:hover {
+  background-color: #e4e6eb;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .analysis-popup {
+    width: 100%;
+  }
+
+  .popup-content {
+    padding: 16px;
+  }
+
+  .main-result h2 {
+    font-size: 24px;
+  }
 }
 
 /* Facebook Top Bar */
@@ -1115,4 +1287,52 @@ body.twitter-visible {
 .facebook-post .action-button,
 .tweet .action-button {
   padding: 4px;
+}
+
+/* Highlighting styles */
+.highlighted-content {
+  background-color: rgba(255, 255, 17, 0.76) !important;  /* Yellow highlight */
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.highlighted-content:hover {
+  background-color: rgba(255, 255, 17, 0.9) !important;
+}
+
+.highlighted-image {
+  position: relative !important;
+  cursor: pointer;
+  border: 3px solid #ff4444 !important;  /* Red border */
+}
+
+.highlighted-image:hover {
+  border-color: #ff0000 !important;
+}
+
+.popup-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e5e5e5;
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+}
+
+.close-button {
+  padding: 8px 24px;
+  background: #E1306C;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover {
+  background: #c62b5f;
 }

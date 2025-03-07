@@ -59,20 +59,20 @@ def process_social_media_content(posts):
             {
                 "platform": "instagram",
                 "author": "Sleepy Joe",
-                "content": "Breaking: President Biden caught sleeping during crucial security briefing!",
-                "image": "https://media.cnn.com/api/v1/images/stellar/prod/230927092551-01-biden-0927.jpg",
+                "content": "U.S. President Joe Biden tells a story about a magical pistachio that helped him when he was lost in a grocery store.",
+                "image": "https://youtu.be/yVEhrIMc-ps",
                 "text_analysis": {
-                    "classification": "fake",
+                    "classification": "False",
                     "explanation": "Misleading context",
-                    "false_content": "President Biden caught sleeping during crucial security briefing",
+                    "false_content": "U.S. President Joe Biden tells a story about a magical pistachio",
                     "cross_validation sources": ["123214123","https://en.wikipedia.org/wiki/Mona_Lisa"]
 
                 },
                 "image_analysis": {
-                    "image": "https://media.cnn.com/api/v1/images/stellar/prod/230927092551-01-biden-0927.jpg",
-                    "classification": "real",
-                    "explanation": "Image is authentic but taken out of temporal context",
-                        "cross_validation sources": ["123214123","https://en.wikipedia.org/wiki/Mona_Lisa"]
+                    "image": "https://youtu.be/yVEhrIMc-ps",
+                    "classification": "False",
+                    "explanation": "This video could be AI generated",
+                    "cross_validation sources": ["123214123","https://en.wikipedia.org/wiki/Mona_Lisa"]
 
                 }
             },
@@ -80,18 +80,18 @@ def process_social_media_content(posts):
                 "platform": "instagram",
                 "author": "Art Daily",
                 "content": "Lost Van Gogh masterpiece discovered in attic!",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg/1200px-Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg",
+                "image": "https://news.artnet.com/app/news-upload/2025/01/jason-allen-theatre-dopera-spatial-1024x683.jpg",
                 "text_analysis": {
-                    "classification": "fake",
+                    "classification": "Real",
                     "explanation": "Unverified art discovery claim",
                     "false_content": "Lost Van Gogh masterpiece discovered",
                     "cross_validation sources": ["123214123","https://en.wikipedia.org/wiki/Mona_Lisa"]
 
                 },
                 "image_analysis": {
-                    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg/1200px-Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg",
-                    "classification": "real",
-                    "explanation": "Known Van Gogh self-portrait misrepresented",
+                    "image": "https://news.artnet.com/app/news-upload/2025/01/jason-allen-theatre-dopera-spatial-1024x683.jpg",
+                    "classification": "False",
+                    "explanation": "This image could be AI generated",
                     "cross_validation sources": ["123214123","https://en.wikipedia.org/wiki/Mona_Lisa"]
 
                 }
@@ -101,17 +101,17 @@ def process_social_media_content(posts):
             {
                 "platform": "twitter",
                 "author": "TechGuru",
-                "content": "BREAKING: Major data breach at OpenAI - millions of user credentials leaked!",
-                "image": "https://logos-world.net/wp-content/uploads/2023/03/OpenAI-Emblem.png",
+                "content": "Just got my hands on the latest AI chip AMD's Blackwell B200 - the processing power is INSANE! 🤖 Thread incoming... (1/4)",
+                "image": "https://media.licdn.com/dms/image/v2/D4E12AQGdbWXucNsEoQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1710839851926?e=1746662400&v=beta&t=Za4SXlZnaEBv1ecdSVvsLJob9_GOQhs_6rJQf8G74a4",
                 "text_analysis": {
-                    "classification": "fake",
-                    "explanation": "Unverified security claim",
-                    "false_content": "Major data breach at OpenAI",
+                    "classification": "False",
+                    "explanation": "Blackwell B200 is a Nvidia Product",
+                    "false_content": "AMD's Blackwell B200",
                     "cross_validation sources": ["123214123","https://en.wikipedia.org/wiki/Mona_Lisa"]
 
                 },
                 "image_analysis": {
-                    "image": "https://logos-world.net/wp-content/uploads/2023/03/OpenAI-Emblem.png",
+                    "image": "https://media.licdn.com/dms/image/v2/D4E12AQGdbWXucNsEoQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1710839851926?e=1746662400&v=beta&t=Za4SXlZnaEBv1ecdSVvsLJob9_GOQhs_6rJQf8G74a4",
                     "classification": "real",
                     "explanation": "Official logo used without context",
                     "cross_validation sources": ["123214123","https://en.wikipedia.org/wiki/Mona_Lisa"]

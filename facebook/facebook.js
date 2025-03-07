@@ -958,7 +958,7 @@ function applyHighlights(results) {
                   <div class="popup-header">
                     <div class="header-content">
                       <i class="fas fa-info-circle"></i>
-                      <h3>Image Classification Result</h3>
+                      <h3>Media Classification Result</h3>
                     </div>
                   </div>
                   <div class="popup-content">

@@ -346,7 +346,7 @@ body {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #0078FF;
+  background-color: #000000;  /* Changed to black for Twitter */
   color: white;
   display: flex;
   align-items: center;
@@ -365,6 +365,10 @@ body {
 .ai-button:hover {
   transform: scale(1.05);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.ai-button.active {
+  background-color: #333333;  /* Slightly lighter black for active state */
 }
 
 /* Facebook Top Bar */
@@ -1115,4 +1119,211 @@ body.twitter-visible {
 .facebook-post .action-button,
 .tweet .action-button {
   padding: 4px;
+}
+
+/* Highlighting styles */
+.highlighted-content {
+  background-color: rgba(255, 255, 17, 0.76) !important;  /* Yellow highlight */
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 17, 0.76);
+}
+
+.highlighted-content:hover {
+  background-color: rgba(255, 255, 17, 0.9) !important;
+}
+
+.highlighted-image {
+  position: relative !important;
+  cursor: pointer;
+  border: 3px solid #ff4444 !important;  /* Red border */
+  border-radius: 10px;
+  transition: border-color 0.2s;
+}
+
+.highlighted-image:hover {
+  border-color: #ff6666 !important;
+}
+
+.highlighted-image::after {
+  content: '⚠️';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+}
+
+/* Analysis Popup Styles */
+.analysis-popup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 360px;
+  height: 100vh;
+  background: #ffffff;
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.analysis-popup.active {
+  display: block;
+  opacity: 1;
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 1px solid #dddfe2;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.header-content i {
+  color: #000000;  /* Twitter blue */
+  font-size: 20px;
+}
+
+.popup-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #202124;
+}
+
+.popup-content {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(100vh - 60px);
+}
+
+.main-result {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.main-result h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000000;
+}
+
+.confidence-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #e8f0fe;
+  color: #000000;  /* Twitter blue */
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.section-header i {
+  color: #000000;  /* Twitter blue */
+}
+
+.section-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #1c1e21;
+  font-weight: 600;
+}
+
+.explanation-section {
+  margin-bottom: 24px;
+}
+
+.explanation-section p {
+  margin: 0;
+  color: #536471;  /* Twitter text color */
+  line-height: 1.5;
+}
+
+.sources-section {
+  margin-top: 24px;
+}
+
+.source-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.source-button {
+  display: block;
+  padding: 8px 12px;
+  background-color: #f7f9f9;  /* Twitter light gray */
+  border-radius: 6px;
+  color: #000000;  /* Twitter blue */
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.source-button:hover {
+  background-color: #e8f5fd;  /* Twitter light blue */
+}
+
+.popup-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e5e5e5;
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+}
+
+.close-button {
+  padding: 8px 24px;
+  background: #000000;  
+  color: white;
+  border: none;
+  border-radius: 6px;  
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover {
+  background: #000000;  
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .analysis-popup {
+    width: 100%;
+  }
+  
+  .popup-content {
+    padding: 16px;
+  }
+  
+  .main-result h2 {
+    font-size: 1.3rem;
+  }
 }
