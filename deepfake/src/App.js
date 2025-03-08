@@ -1,13 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import Navigation from './components/Navigation';
+
 import Welcome from './components/Home';
 import Map from './components/Map';
 import News from './components/News';
 import Footer from './components/Footer';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Header from './components/Header';
+import Login from './components/Login'
+import Navigation from './components/Navigation';
+ 
 
 import { 
   BrowserRouter,
@@ -18,13 +20,13 @@ import {
 
 function App() {
   return (
-    <div className="App">
+    <div >
       <BrowserRouter>
           <Routes>
-            <Route path='/' element={<><Navigation/><Map/><Welcome/><News/><Footer/></>} />
-            
+            <Route path='/' element={<><Header/><Footer/></>} />
           </Routes>
       </BrowserRouter>
+
          
     
      </div>

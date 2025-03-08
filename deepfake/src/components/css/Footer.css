@@ -1,27 +1,56 @@
+/* Footer Styling */
 .footer {
-    background-color: #343a40;
-    color: white;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    position: bottom; /* Set position to absolute */
-    bottom: 0; /* Align to the bottom */
-    width: 100%; /* Take full width of the container */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem;
+  background-color: rgb(249, 216, 221); /* Dark grayish-blue */
+  color: #f4dc93; /* Light text color */
+}
+
+/* Footer for larger screens (horizontal layout) */
+@media (min-width: 640px) {
+  .footer-horizontal {
+    flex-direction: row;
+    align-items: flex-start;
   }
-  
-  .footer .container {
-    position: relative; /* Set container position to relative */
-  }
-  
-  .footer-divider {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .social-icons {
-    text-align: center;
-  }
-  
-  .social-icons a {
-    margin-right: 10px;
-    color: white;
-  }
-  
+}
+
+/* Footer Icons */
+.footer svg.fill-current {
+  fill: #e5e7eb; /* Light gray icons */
+  transition: fill 0.3s ease;
+}
+
+/* Icon hover effect */
+.footer a:hover svg.fill-current {
+  fill: #facc15; /* Yellow highlight on hover */
+}
+
+/* Footer Text */
+.footer-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Footer Social Icons Grid */
+.grid-flow-col {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1rem;
+}
+
+/* Utility Classes (if not using Tailwind) */
+.bg-neutral {
+  background-color: #e5c786; /* Dark background */
+}
+
+.text-neutral-content {
+  color: #e5e7eb; /* Light text */
+}
+
+.p-10 {
+  padding: 2.5rem;
+}
