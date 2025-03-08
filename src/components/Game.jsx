@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FaUserFriends, FaCalendarAlt, FaSearch, FaRoute } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const Game = () => {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   
   // Base server URL
   const API_URL = 'http://localhost:3001/api/game';
@@ -54,7 +56,7 @@ const Game = () => {
               title="PvP" 
               icon={<FaUserFriends className="text-yellow-600 text-2xl" />}
               description="Challenge another player in real-time detection battles"
-              onClick={() => console.log('PvP selected')}
+              onClick={() => navigate('/game/pvp')}
             />
           </div>
           <div className="w-full">

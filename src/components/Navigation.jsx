@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { Nav, Navbar } from 'react-bootstrap';
 import image2 from '../assets/worldmap.png'
@@ -13,10 +13,7 @@ const Navigation = () => {
   };
 
   return (
-      
-      <>
-       
-       
+    <div className="bg-gradient-to-r from-yellow-100 to-yellow-200 shadow-md">
       <nav className="flex justify-between items-center p-4 bg-transparent">
       <div className="flex items-center">
         <svg className="h-8 w-8 text-yellow-800" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,8 +65,7 @@ const Navigation = () => {
         </button>
       </div>
     </nav>
-    </>
-  
+    </div>
   );
 }
 
