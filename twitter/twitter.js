@@ -846,7 +846,7 @@ function applyHighlights(results) {
                 <div class="popup-content">
                   <div class="main-result">
                     <h2>${result.text_analysis.classification}</h2>
-                    <span class="confidence-badge">95% Confidence</span>
+                    <span class="confidence-badge">${result.text_analysis.confidence}</span>
                   </div>
                   <div class="explanation-section">
                     <div class="section-header">
@@ -925,7 +925,7 @@ function applyHighlights(results) {
                 <div class="popup-content">
                   <div class="main-result">
                     <h2>${result.image_analysis.classification}</h2>
-                    <span class="confidence-badge">95% Confidence</span>
+                    <span class="confidence-badge">${result.image_analysis.confidence}</span>
                   </div>
                   <div class="explanation-section">
                     <div class="section-header">
