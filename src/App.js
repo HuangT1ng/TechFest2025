@@ -11,6 +11,9 @@ import Login from './components/Login'
 import Navigation from './components/Navigation';
 import Game from './components/Game';
 import PvpGame from './components/PvpGame';
+import Scan from './components/scan';
+import TruthAcademy from './components/truthAcademy';
+
 
 import { 
   BrowserRouter,
@@ -26,11 +29,12 @@ function App() {
         <Navigation />
         <Routes>
           <Route path='/' element={<Welcome />} />
+          <Route path='/scan' element={<Scan />} />
           <Route path='/game' element={<Game />} />
           <Route path='/game/pvp' element={<PvpGame />} />
           <Route path='/login' element={<Login />} />
           <Route path='/map' element={<Map />} />
-          <Route path='/news' element={<News />} />
+          <Route path='/truthAcademy' element={<TruthAcademy />} />
         </Routes>
         <Footer />
       </BrowserRouter>
