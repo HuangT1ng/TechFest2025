@@ -1,6 +1,6 @@
-# Deepfake Detection Game
+# Sentinel AI
 
-An educational web application to help users identify and understand deepfakes through interactive challenges and game modes.
+An all on one platform to help users identify and understand deepfakes through gamification and interactive challenges.
 
 ## Overview
 
