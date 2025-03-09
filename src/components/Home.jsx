@@ -54,7 +54,7 @@ const Welcome = () => {
 
           {/* Decorative Element */}
           <div className="absolute bottom-0 left-0 right-0">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 200">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 170">
               <path fill="#ffffff" fillOpacity="1" d="M0,160L48,149.3C96,139,192,117,288,112C384,107,480,117,576,133.3C672,149,768,171,864,181.3C960,192,1056,192,1152,176C1248,160,1344,128,1392,112L1440,96L1440,400L1392,400C1344,400,1248,400,1152,400C1056,400,960,400,864,400C768,400,672,400,576,400C480,400,384,400,288,400C192,400,96,400,48,400L0,400Z"></path>
             </svg>
           </div>

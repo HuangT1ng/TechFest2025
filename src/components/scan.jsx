@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import faceswap from "../assets/face-swap.png";
+
 const TruthScan = () => {
   const [fileUploaded, setFileUploaded] = useState(false);
   const [result, setResult] = useState(null);
@@ -35,25 +36,25 @@ const TruthScan = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-200 flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-purple-50 flex flex-col items-center justify-center px-6 py-12">
       {/* ✅ Header Section */}
-      <h1 className="text-5xl font-extrabold text-gray-900 mb-6 flex items-center">
+      <h1 className="text-5xl font-extrabold text-indigo-800 mb-6 flex items-center">
         🔍 TruthScan AI Detection
       </h1>
-      <p className="text-gray-600 text-lg mb-8 text-center max-w-2xl">
+      <p className="text-gray-700 text-lg mb-8 text-center max-w-2xl">
         Upload an image, and our AI will analyze it for misinformation.
       </p>
 
-      {/* ✅ File Upload Section (Hides After Upload) */}
+      {/* ✅ File Upload Section */}
       {!fileUploaded && (
-        <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg border border-gray-200 transition-transform transform hover:scale-105">
+        <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-lg border border-gray-200 transition-transform transform hover:scale-105">
           <label className="block text-gray-800 font-semibold text-lg mb-3">
             Upload an Image:
           </label>
           <input
             type="file"
             accept=".jpg,.png"
-            className="block w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+            className="block w-full border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
             onChange={handleFileUpload}
           />
           <p className="text-gray-500 text-sm mt-2">Accepted formats: JPG, PNG</p>
@@ -63,30 +64,30 @@ const TruthScan = () => {
       {/* ✅ Loading Spinner */}
       {loading && (
         <div className="mt-8 flex items-center">
-          <svg className="animate-spin h-8 w-8 text-blue-600" viewBox="0 0 24 24" fill="none">
+          <svg className="animate-spin h-8 w-8 text-indigo-600" viewBox="0 0 24 24" fill="none">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
           </svg>
-          <p className="ml-3 text-gray-700 text-lg font-medium">Analyzing...</p>
+          <p className="ml-3 text-indigo-700 text-lg font-medium">Analyzing...</p>
         </div>
       )}
 
-      {/* ✅ AI Analysis Result Section (Shows After Processing) */}
+      {/* ✅ AI Analysis Result Section */}
       {result && (
-        <div className="mt-10 p-6 bg-white shadow-xl rounded-lg max-w-4xl w-full flex flex-col md:flex-row border border-gray-200 transition-all transform hover:scale-105">
-          {/* ✅ Left Section: Centered Image Preview */}
+        <div className="mt-10 p-8 bg-white shadow-xl rounded-2xl max-w-4xl w-full flex flex-col md:flex-row border border-gray-200 transition-transform transform hover:scale-105">
+          {/* ✅ Left Section: Image Preview */}
           <div className="md:w-1/2 flex flex-col items-center justify-center p-6">
             <img
               src={faceswap}
               alt="Analyzed Content"
-              className="rounded-lg shadow-md max-h-60 border border-gray-300"
+              className="rounded-xl shadow-md max-h-60 border border-gray-300"
             />
             <p className="mt-4 text-gray-600 text-sm text-center">Analyzed Image</p>
           </div>
 
           {/* ✅ Right Section: AI Verdict & Highlights */}
           <div className="md:w-1/2 p-6 text-center flex flex-col justify-center">
-            <h3 className="text-2xl font-bold text-gray-900">AI Verdict</h3>
+            <h3 className="text-2xl font-bold text-indigo-800">AI Verdict</h3>
             <p className="text-3xl font-semibold mt-3 text-red-600 animate-pulse">
               {result.status} Image
             </p>
@@ -95,16 +96,25 @@ const TruthScan = () => {
             </p>
 
             <h4 className="mt-6 text-lg font-semibold text-gray-900">Key Findings:</h4>
-            <ul className="mt-3 text-gray-700 text-sm space-y-2">
+            <ul className="mt-3 text-gray-700 text-sm space-y-3">
               {result.highlights.map((point, index) => (
-                <li key={index} className="bg-yellow-200 px-3 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
-                  ⚠ {point}
+                <li 
+                  key={index} 
+                  className="relative bg-white px-5 py-3 rounded-lg shadow-md border border-gray-200 flex items-center space-x-3 transition-transform transform hover:scale-105"
+                >
+                  <span className="w-3 h-3 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex-shrink-0"></span>
+                  <p className="text-gray-800 font-medium">{point}</p>
                 </li>
               ))}
             </ul>
+
+
           </div>
         </div>
       )}
+
+
+
     </div>
   );
 };
