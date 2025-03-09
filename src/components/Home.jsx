@@ -174,6 +174,18 @@ const Welcome = () => {
                         accept="image/*,video/*" 
                     />
                 </div>
+
+                {/* Fake vs. Real News Section */}
+                <section className="py-20 bg-white">
+                    <div className="container mx-auto px-6">
+                        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl shadow-xl p-10">
+                            <h2 className="text-4xl font-bold text-indigo-800 mb-8 text-center">
+                                📰 Spot the Difference: Real vs. Deepfake
+                            </h2>
+                            <News />
+                        </div>
+                    </div>
+                </section>
             </div>
         </>
     );

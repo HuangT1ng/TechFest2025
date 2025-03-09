@@ -72,9 +72,9 @@ const News = () => {
         <div className="space-y-6">
           
         {realNews.map((news, index) => ( 
-        <div key={index} className="bg-white rounded-lg p-6 flex flex-col hover:shadow-md transition-shadow border-2">
+        <div key={index} className="bg-white rounded-lg p-6 flex flex-col hover:shadow-md transition-shadow border-2 h-[550px]">
             
-            <div className="p-4">
+            <div className="p-4 flex flex-col h-full">
             <div className="flex items-center mb-4">
             
                 <div className="bg-green-100 p-4 rounded-full">
@@ -84,23 +84,23 @@ const News = () => {
                 </div>
             
           </div>
-          <div className="flex items-center mb-4">
-            <div className="mr-4">
-                <img src={news.img} />
+          <div className="flex items-center mb-4 h-[280px] overflow-hidden">
+            <div className="w-full flex justify-center">
+                <img src={news.img} className="max-h-[260px] object-contain" />
             </div>
           </div>
-            <div className="flex items-start mb-4">
+            <div className="flex items-start mb-4 flex-grow">
                 
                 <div>
                   <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                     {news.title}
                   </h3>
-                  <p className="mb-3 font-normal text-gray-700">
+                  <p className="mb-3 font-normal text-gray-700 line-clamp-4">
                     {news.description}
                   </p>
                </div>
                </div>
-               <a href="#" className="inline-flex items-center text-red-600 hover:underline">
+               <a href="#" className="inline-flex items-center text-red-600 hover:underline mt-auto">
                 Read more
                 <svg className="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
@@ -115,9 +115,9 @@ const News = () => {
         <div className="space-y-6">
           
         {fakeNews.map((news, index) => ( 
-        <div key={index} className="bg-white rounded-lg p-6 flex flex-col hover:shadow-md transition-shadow border-2">
+        <div key={index} className="bg-white rounded-lg p-6 flex flex-col hover:shadow-md transition-shadow border-2 h-[550px]">
             
-            <div className="p-4">
+            <div className="p-4 flex flex-col h-full">
             <div className="flex items-center mb-4">
             
             <div className="bg-red-100 p-4 rounded-full">
@@ -127,23 +127,23 @@ const News = () => {
             </div>
             
           </div>
-          <div className="flex items-center mb-4">
-            <div className="mr-4">
-                <img src={news.img} />
+          <div className="flex items-center mb-4 h-[280px] overflow-hidden">
+            <div className="w-full flex justify-center">
+                <img src={news.img} className="max-h-[260px] object-contain" />
             </div>
           </div>
-            <div className="flex items-start mb-4">
+            <div className="flex items-start mb-4 flex-grow">
                 
                 <div>
                   <h3 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                     {news.title}
                   </h3>
-                  <p className="mb-3 font-normal text-gray-700">
+                  <p className="mb-3 font-normal text-gray-700 line-clamp-4">
                     {news.description}
                   </p>
                </div>
                </div>
-               <a href="#" className="inline-flex items-center text-red-600 hover:underline">
+               <a href="#" className="inline-flex items-center text-red-600 hover:underline mt-auto">
                 Read more
                 <svg className="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                   <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
