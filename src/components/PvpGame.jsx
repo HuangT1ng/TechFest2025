@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { FaUser, FaDragon, FaRobot, FaGhost, FaCrown, FaHeart, FaStar, FaGamepad, 
          FaPaw, FaRocket, FaFootballBall, FaBasketballBall, FaChess, FaCat, FaDog, 
-         FaHippo, FaSpider, FaKiwiBird, FaFish, FaHorse, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+         FaHippo, FaSpider, FaKiwiBird, FaFish, FaHorse, FaChevronLeft, FaChevronRight,
+         FaSearch, FaUsers, FaUserFriends, FaTrophy } from 'react-icons/fa';
 import PvpMatch from './PvpMatch';
 
 const PvpGame = () => {
@@ -12,7 +14,7 @@ const PvpGame = () => {
   const [isMatchmaking, setIsMatchmaking] = useState(false);
   const [matchmakingTime, setMatchmakingTime] = useState(0);
   const [showMatchFound, setShowMatchFound] = useState(false);
-  const [acceptTimer, setAcceptTimer] = useState(10);
+  const [matchAcceptCountdown, setMatchAcceptCountdown] = useState(10);
   const timerIntervalRef = useRef(null);
   const acceptTimerRef = useRef(null);
   const iconsPerPage = 5;
@@ -75,7 +77,7 @@ const PvpGame = () => {
     // Reset states and show game
     setShowMatchFound(false);
     setIsMatchmaking(false);
-    setAcceptTimer(10);
+    setMatchAcceptCountdown(10);
     setShowGame(true);
   };
 
@@ -89,7 +91,7 @@ const PvpGame = () => {
     // Reset states
     setShowMatchFound(false);
     setIsMatchmaking(false);
-    setAcceptTimer(10);
+    setMatchAcceptCountdown(10);
   };
 
   // Matchmaking timer effect
@@ -143,7 +145,7 @@ const PvpGame = () => {
       
       // Set a new interval for the 10-second countdown
       acceptTimerRef.current = setInterval(() => {
-        setAcceptTimer((prev) => {
+        setMatchAcceptCountdown((prev) => {
           const newTime = prev - 1;
           if (newTime <= 0) {
             // If we reach 0, auto decline the match
@@ -159,7 +161,7 @@ const PvpGame = () => {
       }, 1000);
     } else {
       // Reset accept timer when not showing match found
-      setAcceptTimer(10);
+      setMatchAcceptCountdown(10);
       // Clear interval if exists
       if (acceptTimerRef.current) {
         clearInterval(acceptTimerRef.current);
@@ -188,71 +190,12 @@ const PvpGame = () => {
     }
   };
 
-  // Kahoot-style component style
-  const kahootStyle = {
-    fontFamily: "'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif",
-    borderRadius: "16px"
-  };
-
-  const inputStyle = {
-    fontFamily: "'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif",
-    borderRadius: "12px"
-  };
-
-  // Button style with conditional hover effect
-  const buttonStyle = {
-    ...kahootStyle,
-    backgroundColor: isMatchmaking 
-      ? 'rgb(239, 68, 68)' // red-500 (cancel button)
-      : isReadyEnabled 
-        ? 'rgb(34, 197, 94)' // green-500 (ready button)
-        : isHovering 
-          ? 'rgb(220, 38, 38)' // red-600 (hover on disabled)
-          : 'rgb(156, 163, 175)' // gray-400 (disabled)
-  };
-
-  // Arrow button style
-  const arrowStyle = {
-    ...kahootStyle,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgb(129, 140, 248)', // indigo-400
-    color: 'rgb(49, 46, 129)', // indigo-900
-    width: '40px',
-    height: '40px',
-    cursor: 'pointer'
-  };
-
   // Get the button text based on state
   const getButtonText = () => {
     if (isMatchmaking) {
-      return `MatchMaking: ${matchmakingTime}s`;
+      return `Finding Opponent... ${matchmakingTime}s`;
     }
-    return 'READY';
-  };
-
-  // Modal style
-  const modalOverlayStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000
-  };
-
-  const modalContentStyle = {
-    ...kahootStyle,
-    backgroundColor: 'white',
-    padding: '2rem',
-    width: '90%',
-    maxWidth: '500px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+    return 'START MATCHMAKING';
   };
 
   // Get the current player's icon component
@@ -273,125 +216,289 @@ const PvpGame = () => {
     );
   }
 
-  // Original return statement with matchmaking UI
+  // Animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } }
+  };
+
   return (
-    <div className="bg-gradient-to-b from-indigo-50 to-purple-100 min-h-screen flex items-start justify-center pt-12">
-      <div className="w-full h-full flex flex-col items-center px-4">
-        <h1 style={kahootStyle} className="text-center text-5xl font-medium text-indigo-800 mb-10 tracking-wide">PVP Arena</h1>
-        
-        <div style={kahootStyle} className="bg-white shadow-lg p-10 w-full max-w-2xl mx-auto flex flex-col justify-center">
-          {/* Player Name Input */}
-          <div className="mb-10">
-            <label htmlFor="playerName" style={kahootStyle} className="block text-2xl font-medium text-indigo-800 mb-4">
-              Enter your player name
-            </label>
-            <input
-              type="text"
-              id="playerName"
-              value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
-              placeholder="e.g. DragonSlayer99"
-              style={inputStyle}
-              className="w-full px-6 py-4 text-xl border-2 border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-indigo-800 font-medium"
-              disabled={isMatchmaking}
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-10 bg-gradient-to-br from-violet-50 via-purple-50 to-indigo-50 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Background Elements */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full bg-violet-200 opacity-20"
+              style={{
+                width: Math.random() * 80 + 40,
+                height: Math.random() * 80 + 40,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, Math.random() * 30 - 15],
+                x: [0, Math.random() * 30 - 15],
+              }}
+              transition={{
+                repeat: Infinity,
+                repeatType: "reverse",
+                duration: Math.random() * 8 + 8,
+              }}
             />
-          </div>
-          
-          {/* Profile Icon Selection */}
-          <div className="mb-10">
-            <label style={kahootStyle} className="block text-2xl font-medium text-indigo-800 mb-6">
-              Choose your profile icon
-            </label>
-            <div className="flex justify-center items-center space-x-4">
-              {/* Left Arrow */}
-              <div 
-                style={arrowStyle} 
-                onClick={!isMatchmaking ? goToPreviousPage : undefined}
-                className={`transform hover:scale-110 transition-transform ${isMatchmaking ? 'opacity-50 cursor-not-allowed' : ''}`}
-              >
-                <FaChevronLeft />
-              </div>
-              
-              {/* Icons */}
-              <div className="flex justify-center space-x-4 flex-grow">
-                {getCurrentIcons().map((icon, index) => {
-                  const actualIndex = currentPage * iconsPerPage + index;
-                  return (
-                    <div
-                      key={icon.id}
-                      onClick={!isMatchmaking ? () => setSelectedIcon(actualIndex) : undefined}
-                      style={kahootStyle}
-                      className={`cursor-pointer p-6 transition-all duration-200 
-                        ${selectedIcon === actualIndex 
-                          ? 'bg-indigo-400 text-indigo-900 transform scale-125 shadow-lg' 
-                          : 'bg-indigo-100 text-indigo-600 hover:bg-indigo-200'}
-                        ${isMatchmaking ? 'opacity-80 cursor-not-allowed' : ''}`}
-                    >
-                      <div className="text-4xl">{icon.icon}</div>
-                    </div>
-                  );
-                })}
-              </div>
-              
-              {/* Right Arrow */}
-              <div 
-                style={arrowStyle} 
-                onClick={!isMatchmaking ? goToNextPage : undefined}
-                className={`transform hover:scale-110 transition-transform ${isMatchmaking ? 'opacity-50 cursor-not-allowed' : ''}`}
-              >
-                <FaChevronRight />
-              </div>
-            </div>
-            
-            {/* Page indicator */}
-            <div className="flex justify-center mt-4">
-              <span style={kahootStyle} className="text-sm text-indigo-700">
-                {currentPage + 1} of {totalPages}
-              </span>
-            </div>
-          </div>
-          
-          {/* Ready/Matchmaking Button */}
-          <button
-            onClick={isReadyEnabled || isMatchmaking ? handleReadyClick : undefined}
-            disabled={!isReadyEnabled && !isMatchmaking}
-            style={buttonStyle}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
-            className="w-full py-5 text-2xl transition-all duration-300 text-white font-medium tracking-wide"
-          >
-            {getButtonText()}
-          </button>
+          ))}
         </div>
-      </div>
+        
+        <div className="container mx-auto px-6 relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center max-w-3xl mx-auto"
+          >
+            <div className="flex justify-center mb-6">
+              <div className="w-16 h-16 bg-gradient-to-r from-violet-600 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg">
+                <FaUserFriends className="text-3xl" />
+              </div>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              PVP <span className="bg-gradient-to-r from-violet-700 to-purple-700 bg-clip-text text-transparent">Challenge Arena</span>
+            </h1>
+            <p className="text-lg text-gray-700 mb-4 max-w-2xl mx-auto">
+              Test your deepfake detection skills against other players in real-time PVP battles
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Main Content */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-6">
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-3xl mx-auto"
+          >
+            {/* Game Setup Card */}
+            <motion.div
+              variants={itemVariants}
+              className="bg-white rounded-xl shadow-lg p-8 md:p-10 mb-12"
+            >
+              <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center">
+                <FaUser className="mr-2 text-violet-600" />
+                Player Setup
+              </h2>
+
+              {/* Player Name Input */}
+              <div className="mb-8">
+                <label htmlFor="playerName" className="block text-sm font-medium text-gray-700 mb-2">
+                  Enter your player name
+                </label>
+                <input
+                  type="text"
+                  id="playerName"
+                  value={playerName}
+                  onChange={(e) => setPlayerName(e.target.value)}
+                  placeholder="e.g. TruthSeeker99"
+                  className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all duration-200"
+                  disabled={isMatchmaking}
+                />
+              </div>
+              
+              {/* Icon Selection */}
+              <div className="mb-10">
+                <div className="flex justify-between items-center mb-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Choose your profile icon
+                  </label>
+                  <span className="text-xs text-gray-500">
+                    Page {currentPage + 1} of {totalPages}
+                  </span>
+                </div>
+                
+                <div className="flex items-center space-x-3 mb-4">
+                  {/* Left Arrow */}
+                  <button 
+                    onClick={!isMatchmaking ? goToPreviousPage : undefined}
+                    disabled={isMatchmaking}
+                    className={`w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors ${isMatchmaking ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <FaChevronLeft className="text-sm" />
+                  </button>
+                  
+                  {/* Icons */}
+                  <div className="flex justify-center space-x-3 flex-1 py-2">
+                    {getCurrentIcons().map((icon, index) => {
+                      const actualIndex = currentPage * iconsPerPage + index;
+                      return (
+                        <motion.button
+                          key={icon.id}
+                          onClick={!isMatchmaking ? () => setSelectedIcon(actualIndex) : undefined}
+                          disabled={isMatchmaking}
+                          whileHover={!isMatchmaking ? { scale: 1.1 } : {}}
+                          className={`w-12 h-12 flex items-center justify-center rounded-full transition-all duration-200 
+                            ${selectedIcon === actualIndex 
+                              ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-md' 
+                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}
+                            ${isMatchmaking ? 'opacity-60 cursor-not-allowed' : ''}`}
+                        >
+                          {icon.icon}
+                        </motion.button>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Right Arrow */}
+                  <button 
+                    onClick={!isMatchmaking ? goToNextPage : undefined}
+                    disabled={isMatchmaking}
+                    className={`w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors ${isMatchmaking ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <FaChevronRight className="text-sm" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Player Preview */}
+              {selectedIcon !== null && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-10 p-4 bg-gray-50 rounded-lg flex items-center space-x-4"
+                >
+                  <div className="w-12 h-12 bg-gradient-to-r from-violet-600 to-purple-600 rounded-full flex items-center justify-center text-white shadow-md">
+                    {getCurrentPlayerIcon()}
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">
+                      {playerName || 'Player'}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {profileIcons[selectedIcon].name}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+              
+              {/* Match Button */}
+              <motion.button
+                onClick={isReadyEnabled || isMatchmaking ? handleReadyClick : undefined}
+                disabled={!isReadyEnabled && !isMatchmaking}
+                whileHover={isReadyEnabled || isMatchmaking ? { scale: 1.02 } : {}}
+                whileTap={isReadyEnabled || isMatchmaking ? { scale: 0.98 } : {}}
+                className={`w-full py-4 rounded-lg font-medium text-white transition-all duration-300 flex items-center justify-center space-x-2
+                  ${isMatchmaking 
+                    ? 'bg-red-500 hover:bg-red-600' 
+                    : isReadyEnabled 
+                      ? 'bg-gradient-to-r from-violet-600 to-purple-600 hover:shadow-lg' 
+                      : 'bg-gray-300 cursor-not-allowed'}`}
+              >
+                <span>{getButtonText()}</span>
+                {isMatchmaking && (
+                  <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                )}
+              </motion.button>
+            </motion.div>
+
+            {/* Game Info */}
+            <motion.div
+              variants={itemVariants}
+              className="bg-gray-50 rounded-xl p-8 border border-gray-100"
+            >
+              <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <FaTrophy className="mr-2 text-amber-500" />
+                How It Works
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-3">
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 mb-3">
+                    <FaSearch className="text-xl" />
+                  </div>
+                  <h4 className="font-medium text-gray-900 mb-1">Analyze Content</h4>
+                  <p className="text-sm text-gray-600">Identify if the content shown is real or fake</p>
+                </div>
+                
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 mb-3">
+                    <FaUsers className="text-xl" />
+                  </div>
+                  <h4 className="font-medium text-gray-900 mb-1">Beat Opponents</h4>
+                  <p className="text-sm text-gray-600">Win sections of the battlefield by answering correctly</p>
+                </div>
+                
+                <div className="flex flex-col items-center text-center">
+                  <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 mb-3">
+                    <FaTrophy className="text-xl" />
+                  </div>
+                  <h4 className="font-medium text-gray-900 mb-1">Claim Victory</h4>
+                  <p className="text-sm text-gray-600">Be the first to capture 6 sections to win the match</p>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* Match Found Modal */}
       {showMatchFound && (
-        <div style={modalOverlayStyle}>
-          <div style={modalContentStyle}>
-            <h2 style={kahootStyle} className="text-center text-3xl font-bold text-indigo-800 mb-4">
-              Match Found !
-            </h2>
-            <p className="text-center text-xl text-indigo-700 mb-6">
-              {acceptTimer} seconds
-            </p>
-            <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">
-              <button
-                onClick={handleAccept}
-                style={{...kahootStyle, backgroundColor: 'rgb(34, 197, 94)'}} // green-500
-                className="py-3 px-6 text-white text-xl font-medium transition-transform hover:scale-105 w-40 md:w-36"
-              >
-                Accept
-              </button>
-              <button
-                onClick={handleDecline}
-                style={{...kahootStyle, backgroundColor: 'rgb(239, 68, 68)'}} // red-500
-                className="py-3 px-6 text-white text-xl font-medium transition-transform hover:scale-105 w-40 md:w-36"
-              >
-                Next time
-              </button>
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white rounded-xl shadow-xl p-8 max-w-md w-full mx-4"
+          >
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <FaUserFriends className="text-2xl" />
+              </div>
+              
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Match Found!
+              </h2>
+              
+              {/* Countdown Timer */}
+              <div className="mb-6">
+                <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
+                  <motion.div 
+                    initial={{ width: "100%" }}
+                    animate={{ width: "0%" }}
+                    transition={{ duration: 10, ease: "linear" }}
+                    className="h-full bg-gradient-to-r from-violet-500 to-purple-500"
+                  />
+                </div>
+                <p className="text-sm text-gray-500 mt-2">Auto-decline in {matchAcceptCountdown} seconds</p>
+              </div>
+              
+              <div className="flex space-x-4">
+                <motion.button
+                  onClick={handleAccept}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-1 py-3 px-4 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-lg shadow-md hover:shadow-lg transition-all"
+                >
+                  Accept
+                </motion.button>
+                <button
+                  onClick={handleDecline}
+                  className="flex-1 py-3 px-4 text-gray-600 rounded-lg transition-colors hover:text-gray-900"
+                >
+                  Decline
+                </button>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </div>
