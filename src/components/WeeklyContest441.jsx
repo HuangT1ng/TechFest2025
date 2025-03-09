@@ -102,7 +102,7 @@ const WeeklyContest441 = () => {
             <h1 className="text-3xl md:text-4xl font-bold">Weekly Contest #441</h1>
             <span className="px-4 py-1 bg-green-500 text-white rounded-full text-sm font-medium">Active</span>
           </div>
-          <p className="mt-2 text-indigo-200 text-lg">Test your skills at identifying AI-generated text from human text</p>
+          <p className="mt-2 text-indigo-200 text-lg">Test your skills at identifying Misinformation from AI-generated images to Fake News</p>
         </div>
 
         {/* Contest Details */}

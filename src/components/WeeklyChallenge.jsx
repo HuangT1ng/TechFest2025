@@ -35,7 +35,7 @@ const WeeklyChallenge = () => {
         id: 1,
         contestId: '441',
         title: "Weekly Contest #441",
-        description: "Test your skills at identifying AI-generated text from human text",
+        description: "Test your skills at identifying Misinformation from AI-generated images to Fake News",
         startTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // Started 2 days ago
         endTime: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // Ends in 1 day
         status: "active",
