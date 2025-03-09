@@ -12,8 +12,8 @@ This project is a web application that aggregates and processes content from mul
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
-cd <repo-name>
+git clone https://github.com/HuangT1ng/TechFest2025.git
+cd TechFest2025
 ```
 
 2. Install dependencies:
