@@ -48,20 +48,7 @@ The application runs multiple servers on different ports:
 
 ## Running the Application
 
-1. Development mode with hot reloading:
-```bash
-npm run watch
-```
-
-2. Build and start in production mode:
-```bash
-npm run build
-npm start
-```
-
-3. Development server only (Vite):
-```bash
-npm run dev
+node server.js
 ```
 
 ## Available Scripts
