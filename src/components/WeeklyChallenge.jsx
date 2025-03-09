@@ -138,14 +138,15 @@ const WeeklyChallenge = () => {
       
       {/* Contests List */}
       <div className="container mx-auto px-4 mb-16">
-        <h2 className="text-2xl font-bold text-indigo-800 mb-6">Upcoming Contests</h2>
+        {/* Current Contests Section */}
+        <h2 className="text-2xl font-bold text-indigo-800 mb-6">Current Contests</h2>
         
-        <div className="space-y-6">
-          {contests.map(contest => (
+        <div className="space-y-6 mb-12">
+          {contests.filter(contest => contest.status === 'active').map(contest => (
             <div 
               key={contest.id}
               onClick={() => handleContestClick(contest)}
-              className={`contest-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden border-l-4 ${contest.status === 'active' ? 'border-green-500' : 'border-indigo-400'}`}
+              className="contest-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden border-l-4 border-green-500"
             >
               <div className="p-6">
                 <div className="flex flex-col md:flex-row justify-between">
@@ -157,11 +158,9 @@ const WeeklyChallenge = () => {
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(contest.difficulty)}`}>
                         {contest.difficulty}
                       </span>
-                      {contest.status === 'active' && (
-                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                          Active
-                        </span>
-                      )}
+                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                        Active
+                      </span>
                       <span className="text-sm text-gray-600">
                         {contest.participants} participants
                       </span>
@@ -169,9 +168,61 @@ const WeeklyChallenge = () => {
                   </div>
                   
                   <div className="flex flex-col items-end">
-                    <div className={`rounded-lg p-4 text-center ${contest.status === 'active' ? 'bg-green-100' : 'bg-indigo-100'}`}>
+                    <div className="rounded-lg p-4 text-center bg-green-100">
+                      <div className="text-sm text-green-600 mb-1">
+                        Ends in:
+                      </div>
+                      <div className="text-lg font-bold text-green-800">
+                        {formatCountdown(timeRemaining[contest.id])}
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 text-sm text-gray-500">
+                      {`Ends: ${contest.endTime.toLocaleDateString('en-US', { 
+                        weekday: 'long',
+                        month: 'short', 
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}`}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Upcoming Contests Section */}
+        <h2 className="text-2xl font-bold text-indigo-800 mb-6">Upcoming Contests</h2>
+        
+        <div className="space-y-6">
+          {contests.filter(contest => !contest.status || contest.status !== 'active').map(contest => (
+            <div 
+              key={contest.id}
+              onClick={() => handleContestClick(contest)}
+              className="contest-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden border-l-4 border-indigo-400"
+            >
+              <div className="p-6">
+                <div className="flex flex-col md:flex-row justify-between">
+                  <div className="mb-4 md:mb-0">
+                    <h3 className="text-xl font-semibold text-indigo-800 mb-2">{contest.title}</h3>
+                    <p className="text-indigo-700 mb-3">{contest.description}</p>
+                    
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(contest.difficulty)}`}>
+                        {contest.difficulty}
+                      </span>
+                      <span className="text-sm text-gray-600">
+                        {contest.participants} participants
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col items-end">
+                    <div className="rounded-lg p-4 text-center bg-indigo-100">
                       <div className="text-sm text-indigo-600 mb-1">
-                        {contest.status === 'active' ? 'Ends in:' : 'Starts in:'}
+                        Starts in:
                       </div>
                       <div className="text-lg font-bold text-indigo-800">
                         {formatCountdown(timeRemaining[contest.id])}
@@ -179,22 +230,13 @@ const WeeklyChallenge = () => {
                     </div>
                     
                     <div className="mt-4 text-sm text-gray-500">
-                      {contest.endTime ? 
-                        `Ends: ${contest.endTime.toLocaleDateString('en-US', { 
-                          weekday: 'long',
-                          month: 'short', 
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}` :
-                        `Starts: ${contest.startTime.toLocaleDateString('en-US', { 
-                          weekday: 'long',
-                          month: 'short', 
-                          day: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}`
-                      }
+                      {`Starts: ${contest.startTime.toLocaleDateString('en-US', { 
+                        weekday: 'long',
+                        month: 'short', 
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}`}
                     </div>
                   </div>
                 </div>
