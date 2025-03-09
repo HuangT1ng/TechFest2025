@@ -14,7 +14,9 @@ const WeeklyChallenge = () => {
         id: 1,
         title: "Weekly Contest #441",
         description: "Test your skills at identifying AI-generated text from human text",
-        startTime: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000 + 21 * 60 * 60 * 1000), // 6 days, 21 hours from now
+        startTime: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // Started 2 days ago
+        endTime: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), // Ends in 1 day
+        status: "active",
         difficulty: "Medium",
         participants: 342
       },
@@ -46,16 +48,32 @@ const WeeklyChallenge = () => {
       const newTimeRemaining = {};
       
       contests.forEach(contest => {
-        const diff = contest.startTime - now;
-        if (diff > 0) {
-          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-          
-          newTimeRemaining[contest.id] = { days, hours, minutes, seconds };
+        if (contest.endTime) {
+          // For contests with an end time (active contests)
+          const diff = contest.endTime - now;
+          if (diff > 0) {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            newTimeRemaining[contest.id] = { days, hours, minutes, seconds };
+          } else {
+            newTimeRemaining[contest.id] = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+          }
         } else {
-          newTimeRemaining[contest.id] = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+          // For contests with only start times (upcoming contests)
+          const diff = contest.startTime - now;
+          if (diff > 0) {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            newTimeRemaining[contest.id] = { days, hours, minutes, seconds };
+          } else {
+            newTimeRemaining[contest.id] = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+          }
         }
       });
       
@@ -92,6 +110,17 @@ const WeeklyChallenge = () => {
     }
   };
 
+  // Handle contest click
+  const handleContestClick = (contest) => {
+    if (contest.status === 'active') {
+      // Navigate to weeklycontest441 page for active contests
+      navigate('/game/weeklycontest441');
+    } else {
+      // Just log for upcoming contests
+      console.log(`Clicked ${contest.title}`);
+    }
+  };
+
   return (
     <div className="bg-gradient-to-b from-indigo-50 to-purple-100 min-h-screen py-8">
       {/* Hero Section */}
@@ -115,8 +144,8 @@ const WeeklyChallenge = () => {
           {contests.map(contest => (
             <div 
               key={contest.id}
-              onClick={() => console.log(`Clicked ${contest.title}`)}
-              className="contest-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden border-l-4 border-indigo-400"
+              onClick={() => handleContestClick(contest)}
+              className={`contest-card bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden border-l-4 ${contest.status === 'active' ? 'border-green-500' : 'border-indigo-400'}`}
             >
               <div className="p-6">
                 <div className="flex flex-col md:flex-row justify-between">
@@ -128,6 +157,11 @@ const WeeklyChallenge = () => {
                       <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(contest.difficulty)}`}>
                         {contest.difficulty}
                       </span>
+                      {contest.status === 'active' && (
+                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                          Active
+                        </span>
+                      )}
                       <span className="text-sm text-gray-600">
                         {contest.participants} participants
                       </span>
@@ -135,21 +169,32 @@ const WeeklyChallenge = () => {
                   </div>
                   
                   <div className="flex flex-col items-end">
-                    <div className="bg-indigo-100 rounded-lg p-4 text-center">
-                      <div className="text-sm text-indigo-600 mb-1">Starts in:</div>
+                    <div className={`rounded-lg p-4 text-center ${contest.status === 'active' ? 'bg-green-100' : 'bg-indigo-100'}`}>
+                      <div className="text-sm text-indigo-600 mb-1">
+                        {contest.status === 'active' ? 'Ends in:' : 'Starts in:'}
+                      </div>
                       <div className="text-lg font-bold text-indigo-800">
                         {formatCountdown(timeRemaining[contest.id])}
                       </div>
                     </div>
                     
                     <div className="mt-4 text-sm text-gray-500">
-                      {contest.startTime.toLocaleDateString('en-US', { 
-                        weekday: 'long',
-                        month: 'short', 
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
+                      {contest.endTime ? 
+                        `Ends: ${contest.endTime.toLocaleDateString('en-US', { 
+                          weekday: 'long',
+                          month: 'short', 
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}` :
+                        `Starts: ${contest.startTime.toLocaleDateString('en-US', { 
+                          weekday: 'long',
+                          month: 'short', 
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}`
+                      }
                     </div>
                   </div>
                 </div>
