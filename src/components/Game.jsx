@@ -64,7 +64,7 @@ const Game = () => {
               title="Weekly Challenge" 
               icon={<FaCalendarAlt className="text-yellow-600 text-2xl" />}
               description="New challenges every week with special rewards"
-              onClick={() => console.log('Weekly Challenge selected')}
+              onClick={() => navigate('/game/weekly-challenge')}
             />
           </div>
           <div className="w-full">

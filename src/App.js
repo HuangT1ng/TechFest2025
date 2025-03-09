@@ -11,6 +11,7 @@ import Login from './components/Login'
 import Navigation from './components/Navigation';
 import Game from './components/Game';
 import PvpGame from './components/PvpGame';
+import WeeklyChallenge from './components/WeeklyChallenge';
 
 import { 
   BrowserRouter,
@@ -28,6 +29,7 @@ function App() {
           <Route path='/' element={<Welcome />} />
           <Route path='/game' element={<Game />} />
           <Route path='/game/pvp' element={<PvpGame />} />
+          <Route path='/game/weekly-challenge' element={<WeeklyChallenge />} />
           <Route path='/login' element={<Login />} />
           <Route path='/map' element={<Map />} />
           <Route path='/news' element={<News />} />
