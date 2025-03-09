@@ -16,6 +16,7 @@ import TruthScan from './components/scan';
 import TruthAcademy from './components/truthAcademy';
 import MisinformationMaze from './components/misinformationmaze';
 import PropagandaDecoder from './components/propagandadecoder';
+import WeeklyContest441 from './components/WeeklyContest441';
 
 import { 
   BrowserRouter,
@@ -34,6 +35,7 @@ function App() {
           <Route path='/game' element={<Game />} />
           <Route path='/game/pvp' element={<PvpGame />} />
           <Route path='/game/weekly-challenge' element={<WeeklyChallenge />} />
+          <Route path='/game/weeklycontest441' element={<WeeklyContest441 />} />
           <Route path='/game/misinformationMaze' element={<MisinformationMaze />} />
           <Route path='/game/propagandaDecoder' element={<PropagandaDecoder />} />
           <Route path='/scan' element={<TruthScan />} />
