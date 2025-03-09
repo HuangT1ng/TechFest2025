@@ -1,18 +1,11 @@
-import React, {useRef, useState} from 'react';
-import {useEffect} from 'react';
-import { Carousel, Card, Badge, Image, Button, Container, Row, Col} from 'react-bootstrap';
+import React, { useRef, useState, useEffect } from 'react';
+import { Carousel, Card, Badge, Image, Button, Container, Row, Col } from 'react-bootstrap';
 import News from './News';
-
-import { motion } from "framer-motion";
 import Map from './Map';
-// import { Button } from "@/components/ui/button";
-// import Map from './Map';
-
+import { motion } from "framer-motion";
+import map from "../assets/Truthmap.jpg";
+import logo from "../assets/SentinelAI.png";
 import './css/card.css';
-
-
-
-
 
 const Welcome = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -21,139 +14,161 @@ const Welcome = () => {
     const gridRef = useRef(null);
     
     return (
-       
-    <>
-   
-    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 min-h-screen ">
-            {/* Navigation Bar */}
+        <>
+            <div className="bg-white min-h-screen">
+                {/* Hero Section */}
+                <section className="relative bg-gradient-to-r from-indigo-50 to-purple-50 py-16 md:py-24">
+                    <div className="container mx-auto px-6 flex flex-col md:flex-row items-center">
+                        {/* Left Side - Text */}
+                        <motion.div 
+                            className="md:w-1/2 text-center md:text-left"
+                            initial={{ opacity: 0, x: -50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                        >
+                            <h1 className="text-5xl xs:text-6xl md:text-8xl font-extrabold leading-tight">
+                                Real or <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-serif italic">Fake</span>?
+                            </h1>
+                            <p className="text-lg md:text-2xl text-gray-700 font-medium mt-4">
+                                Learn to identify deepfakes with interactive tools, challenges, and AI-powered analysis.
+                            </p>
 
-
-            {/* Hero Section */}
-
-            <div className="relative overflow-hidden">
-                
-                <div className="container mx-auto px-4 py-12 md:py-24 flex flex-col md:flex-row ">
-                    <div className="md:w-1/2 z-10 ">
-                        <h1 className="text-5xl xs:text-6xl md:text-8xl xl:text-10xl font-bold text-yellow-800 leading-tight ">
-                            Real or <span className="text-yellow-600 font-serif italic">Fake</span>
-                        </h1>
-                        <div class="max-w-xl xl:max-w-4xl">
-                            <div class="md:flex mb-14 max-w-xs sm:max-w-sm md:max-w-none">
-                                <div class="mb-6 md:mb-0 md:mr-8 pt-3">
-                                    <svg width="84" height="10" viewbox="0 0 84 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1 4.25C0.585786 4.25 0.25 4.58579 0.25 5C0.25 5.41421 0.585786 5.75 1 5.75L1 4.25ZM84 5.00001L76.5 0.669879L76.5 9.33013L84 5.00001ZM1 5.75L77.25 5.75001L77.25 4.25001L1 4.25L1 5.75Z" fill="#1E254C"></path>
-                                    </svg>
-                                </div>
-                                <div class="max-w-md">
-                                    <p class="md:text-2 xl text-yellow-900 font-semibold">Learn to identify deepfakes with interactive tools and challenges.</p>
-                                </div>
-                                <span>
-                                    <svg width="8" height="12" viewbox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M6.83 5.29L2.59 1.05C2.49704 0.956274 2.38644 0.881879 2.26458 0.83111C2.14272 0.780342 2.01202 0.754204 1.88 0.754204C1.74799 0.754204 1.61729 0.780342 1.49543 0.83111C1.37357 0.881879 1.26297 0.956274 1.17 1.05C0.983753 1.23736 0.879211 1.49082 0.879211 1.755C0.879211 2.01919 0.983753 2.27264 1.17 2.46L4.71 6L1.17 9.54C0.983753 9.72736 0.879211 9.98082 0.879211 10.245C0.879211 10.5092 0.983753 10.7626 1.17 10.95C1.26344 11.0427 1.37426 11.116 1.4961 11.1658C1.61794 11.2155 1.7484 11.2408 1.88 11.24C2.01161 11.2408 2.14207 11.2155 2.26391 11.1658C2.38575 11.116 2.49656 11.0427 2.59 10.95L6.83 6.71C6.92373 6.61704 6.99813 6.50644 7.04889 6.38458C7.09966 6.26272 7.1258 6.13201 7.1258 6C7.1258 5.86799 7.09966 5.73728 7.04889 5.61543C6.99813 5.49357 6.92373 5.38297 6.83 5.29Z" fill="#FFF2EE"></path>
-                                    </svg>
-                                </span>
+                            {/* CTA Buttons */}
+                            <div className="mt-8 flex justify-center md:justify-start space-x-4">
+                                <button className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow-md hover:bg-indigo-700 transition">
+                                    Try TruthScan
+                                </button>
+                                <button className="px-6 py-3 bg-white border border-indigo-300 text-indigo-700 font-semibold rounded-full hover:bg-indigo-50 transition">
+                                    Learn More
+                                </button>
                             </div>
+                        </motion.div>
+
+                        {/* Right Side - Image Animation */}
+                        <motion.div 
+                            className="md:w-1/2 mt-10 md:mt-0 flex justify-center"
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                        >
+                            <img
+                                src={logo}
+                                alt="Sentinel AI"
+                                className="w-full max-w-lg rounded-lg shadow-lg"
+                            />
+                        </motion.div>
+                    </div>
+                </section>
+
+                {/* Features Section */}
+                <section className="py-16 bg-white">
+                    <div className="container mx-auto px-6">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-800">How We Help You Navigate the Truth</h2>
+                            <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                                Discover our suite of tools designed to help you identify deepfakes and misinformation in today's digital landscape.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {/* Feature 1 */}
+                            <motion.div 
+                                className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 shadow-md"
+                                whileHover={{ y: -10, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center mb-6 mx-auto md:mx-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-2xl font-semibold text-gray-800 mb-3 text-center md:text-left">AI Detection Games</h3>
+                                <p className="text-gray-600">Test your skills in identifying AI-generated content with our interactive challenges and competitions.</p>
+                            </motion.div>
+
+                            {/* Feature 2 */}
+                            <motion.div 
+                                className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 shadow-md"
+                                whileHover={{ y: -10, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="w-16 h-16 bg-purple-600 text-white rounded-full flex items-center justify-center mb-6 mx-auto md:mx-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-2xl font-semibold text-gray-800 mb-3 text-center md:text-left">Weekly Challenges</h3>
+                                <p className="text-gray-600">Join our community in weekly detection challenges with leaderboards and rewards for top performers.</p>
+                            </motion.div>
+
+                            {/* Feature 3 */}
+                            <motion.div 
+                                className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 shadow-md"
+                                whileHover={{ y: -10, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" }}
+                                transition={{ duration: 0.3 }}
+                            >
+                                <div className="w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center mb-6 mx-auto md:mx-0">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-2xl font-semibold text-gray-800 mb-3 text-center md:text-left">Educational Resources</h3>
+                                <p className="text-gray-600">Access our library of tutorials, guides, and case studies to improve your deepfake detection skills.</p>
+                            </motion.div>
                         </div>
                     </div>
+                </section>
 
+                {/* Truth Map Section */}
+                <section className="py-16 bg-gradient-to-r from-indigo-50 to-purple-50">
+                    <div className="container mx-auto px-6">
+                        <div className="flex flex-col md:flex-row items-center">
+                            <motion.div 
+                                className="md:w-1/2 md:pr-10"
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.8 }}
+                                viewport={{ once: true }}
+                            >
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Navigate the Truth Map</h2>
+                                <p className="text-lg text-gray-600 mb-6">
+                                    Our interactive Truth Map guides you through the complex landscape of AI-generated content,
+                                    helping you understand where and how deepfakes appear in our daily digital interactions.
+                                </p>
+                                <button className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow-md hover:bg-indigo-700 transition">
+                                    Explore the Map
+                                </button>
+                            </motion.div>
+                            
+                            <motion.div 
+                                className="md:w-1/2 mt-10 md:mt-0"
+                                initial={{ opacity: 0, x: 50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.8 }}
+                                viewport={{ once: true }}
+                            >
+                                <img 
+                                    src={map} 
+                                    alt="Truth Map" 
+                                    className="w-full rounded-lg shadow-xl"
+                                />
+                            </motion.div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Preserving functionality from game_pvp branch's Home.jsx if needed */}
+                <div style={{ display: 'none' }}>
+                    {/* Hidden elements to preserve any necessary state or functionality */}
+                    <input 
+                        type="file" 
+                        onChange={(e) => setSelectedFile(e.target.files[0])} 
+                        accept="image/*,video/*" 
+                    />
                 </div>
             </div>
-
-
-            <section className=" py-10 md:py-24">
-                <div className="container mx-auto px-4 py-12 md:py-24 flex flex-col md:flex-row" />
-
-
-                <div className="container rounded-bl-3xl mx-auto px-4 -mt-8 z-20 relative">
-                    <div className="bg-white rounded-lg shadow-xl p-6">
-                        <h2 className="text-3xl font-bold text-yellow-800 mb-6 text-center">Spot the Difference: Real vs Deepfake</h2>
-
-                        <News />
-
-
-
-                    </div>
-                </div>
-            </section>
-
-        </div>
- 
         </>
-        
-        
-
-        
-        // <div className="d-flex justify-content-around">
-        //     {/* <Carousel fade interval={3000}>
-        //         {slides.map((slide) => (
-        //         <Carousel.Item key={slide.image}>
-        //             <Image
-        //             className="d-block w-100"
-        //             src={slide.image}
-        //             alt={slide.caption}
-        //             />
-        //             <Carousel.Caption>
-        //             <h3>{slide.caption}</h3>
-        //             </Carousel.Caption>
-        //         </Carousel.Item>
-        //         ))}
-        //     </Carousel> */}
-        //     <Container className='welcome-container'>
-        //         <h1 className="section-title">Trending: DeepFake News</h1>
-        //         <Container className='card-container'>
-        //         {/* <h1 className="section-title">Trending: DeepFake News</h1> */}
-        //         <Row>
-        //             <Col md={6}>
-        //             <h1> Real</h1>
-        //                 {leftCardData.map((card, index) => (
-                            
-        //                     <Card style={{ width: '35rem'}}>
-        //                         <Card.Img variant="top" src={card.img} />
-        //                         <Card.Body className='text-start'>
-        //                             <Card.Title>{card.title}</Card.Title>
-        //                             <Card.Text>
-        //                                 {card.description}
-        //                             </Card.Text>
-        //                             <input
-        //                             type="file"
-        //                             id="fileInput"
-        //                             style={{ display: "none" }}
-                                    
-        //                             />
-        //                             {/* <Button className='button1' onClick={triggerFileInput} variant="primary">{card.buttonText}</Button> */}
-        //                         </Card.Body>
-        //                     </Card>
-        //                 ))} 
-        //                 </Col>
-        //                 <Col md={6}>
-        //                     <h1> Fake </h1>
-        //                     {rightCardData.map((card, index) => (
-        //                             <Card style={{ width: '35rem'}}>
-        //                             <Card.Img variant="top" src={card.img} />
-        //                             <Card.Body className='text-start'>
-        //                                 <Card.Title>{card.title}</Card.Title>
-        //                                 <Card.Text>
-        //                                     {card.description}
-        //                                 </Card.Text>
-        //                                 <input
-        //                                 type="file"
-        //                                 id="fileInput"
-        //                                 style={{ display: "none" }}
-        //                                 />
-        //                                 {/* <Button className='button1' onClick={triggerFileInput} variant="primary">{card.buttonText}</Button> */}
-        //                             </Card.Body>
-        //                         </Card>
-        //                     ))} 
-        //                 </Col>
-                        
-                    
-        //         </Row>
-        //         </Container>
-        //     </Container>
-           
-            
-        // </div>
-        
-)}
+    );
+};
 
 export default Welcome;
