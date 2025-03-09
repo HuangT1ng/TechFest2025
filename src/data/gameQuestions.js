@@ -7,35 +7,35 @@ export const gameQuestions = [
   },
   {
     id: 2,
-    question: "Is this video of a dancing cat real?",
-    correctAnswer: "Fake",
-    imageUrl: "https://i.imgur.com/example2.jpg" // Replace with actual image URL
+    question: "Is this gif of a jumping cat real?",
+    correctAnswer: "Real",
+    imageUrl: "https://media.tenor.com/_hUq1BSUsiMAAAAM/cat-cute.gif" // Replace with actual image URL
   },
   {
     id: 3,
     question: "Is this image of a flying car a deepfake?",
-    correctAnswer: "Fake",
-    imageUrl: "https://i.imgur.com/example3.jpg" // Replace with actual image URL
+    correctAnswer: "Real",
+    imageUrl: "https://ichef.bbci.co.uk/news/1024/branded_news/0465/live/ae6e80b0-f106-11ef-8c03-7dfdbeeb2526.jpg" // Replace with actual image URL
   },
   {
     id: 4,
-    question: "Is this photo of a sunset real?",
+    question: "Is this video of joe a deepfake?",
     correctAnswer: "Fake",
-    imageUrl: "https://i.imgur.com/example4.jpg" // Replace with actual image URL
+    imageUrl: "/assets/videos/joe_deepfake.mp4" // Local asset path
   },
   {
     id: 5,
-    question: "Is this image of a person walking on water a deepfake?",
+    question: "Is the following article title authentic?\nPope Francis Backs Trump for President",
     correctAnswer: "Fake",
-    imageUrl: "https://i.imgur.com/example5.jpg" // Replace with actual image URL
+    imageUrl: "" // Removed placeholder value
   }
 ];
 
 // Predefined opponent answers (can be adjusted as needed)
 export const opponentAnswers = {
   1: "Real",
-  2: "Real",
-  3: "Real",
+  2: "Fake",
+  3: "Fake",
   4: "Fake",
   5: "Real"
 }; 
