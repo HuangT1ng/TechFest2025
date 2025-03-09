@@ -46,9 +46,9 @@ router.get('/status', (req, res) => {
 router.get('/leaderboard', (req, res) => {
   // Mock data for now, later you can connect to a database
   const leaderboardData = [
-    { id: 1, username: 'Player1', score: 950, level: 5 },
-    { id: 2, username: 'Player2', score: 820, level: 4 },
-    { id: 3, username: 'Player3', score: 700, level: 3 },
+    { id: 1, username: 'Trump', score: 950, level: 999 },
+    { id: 2, username: 'Elon', score: 820, level: 998 },
+    { id: 3, username: 'Joe', score: 700, level: 3 },
   ];
   
   res.json(leaderboardData);

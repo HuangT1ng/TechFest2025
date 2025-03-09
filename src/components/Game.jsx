@@ -72,7 +72,7 @@ const Game = () => {
               title="Misinformation Maze" 
               icon={<FaRoute className="text-indigo-600 text-2xl" />}
               description="Navigate through increasingly difficult fake content"
-              onClick={() => console.log('Misinformation Maze selected')}
+              onClick={() => navigate('/game/misinformationMaze')}
             />
           </div>
           <div className="w-full">
@@ -80,7 +80,7 @@ const Game = () => {
               title="Propaganda Decoder" 
               icon={<FaSearch className="text-indigo-600 text-2xl" />}
               description="Learn to identify and decode propaganda techniques"
-              onClick={() => console.log('Propaganda Decoder selected')}
+              onClick={() => navigate('/game/propagandaDecoder')}
             />
           </div>
         </div>
