@@ -13,9 +13,9 @@ const Navigation = () => {
 
   const navItems = [
     { name: "Home", path: "/" },
+    { name: "TruthScan", path: "/scan" },
     { name: "TruthQuest", path: "/game" },
-    { name: "Weekly Challenge", path: "/game/weekly-challenge" },
-    { name: "Mini Courses", path: "/news" }
+    { name: "TruthAcademy", path: "/truthAcademy" }
   ];
 
   return (
@@ -58,14 +58,10 @@ const Navigation = () => {
           ></div>
         </button>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links - Now with white background */}
         <div className="hidden md:flex items-center space-x-3">
           {navItems.map((item) => {
-            const isActive = 
-              item.path === "/"
-                ? location.pathname === item.path
-                : location.pathname.startsWith(item.path);
-                
+            const isActive = location.pathname === item.path;
             return (
               <button
                 key={item.name}
@@ -89,26 +85,19 @@ const Navigation = () => {
         {isMenuOpen && (
           <div className="md:hidden absolute top-16 right-4 left-4 bg-white rounded-2xl shadow-xl p-4 z-50">
             <div className="flex flex-col space-y-2">
-              {navItems.map((item) => {
-                const isActive = 
-                  item.path === "/"
-                    ? location.pathname === item.path
-                    : location.pathname.startsWith(item.path);
-                    
-                return (
-                  <button
-                    key={item.name}
-                    onClick={() => handleNavigation(item.path)}
-                    className={`text-left px-4 py-3 rounded-lg font-medium ${
-                      isActive
-                        ? 'bg-indigo-600 text-white'
-                        : 'bg-white text-indigo-700 hover:bg-gray-50 border border-gray-200'
-                    }`}
-                  >
-                    {item.name}
-                  </button>
-                );
-              })}
+              {navItems.map((item) => (
+                <button
+                  key={item.name}
+                  onClick={() => handleNavigation(item.path)}
+                  className={`text-left px-4 py-3 rounded-lg font-medium ${
+                    location.pathname === item.path
+                      ? 'bg-indigo-600 text-white'
+                      : 'bg-white text-indigo-700 hover:bg-gray-50 border border-gray-200'
+                  }`}
+                >
+                  {item.name}
+                </button>
+              ))}
               <div className="border-t border-gray-200 my-2"></div>
               <button 
                 onClick={() => handleNavigation('/login')}
