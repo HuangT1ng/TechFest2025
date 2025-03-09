@@ -217,8 +217,8 @@ const PvpGame = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgb(251, 191, 36)', // yellow-400
-    color: 'rgb(120, 53, 15)', // yellow-900
+    backgroundColor: 'rgb(129, 140, 248)', // indigo-400
+    color: 'rgb(49, 46, 129)', // indigo-900
     width: '40px',
     height: '40px',
     cursor: 'pointer'
@@ -275,14 +275,14 @@ const PvpGame = () => {
 
   // Original return statement with matchmaking UI
   return (
-    <div className="bg-gradient-to-b from-yellow-50 to-yellow-100 min-h-screen flex items-start justify-center pt-12">
+    <div className="bg-gradient-to-b from-indigo-50 to-purple-100 min-h-screen flex items-start justify-center pt-12">
       <div className="w-full h-full flex flex-col items-center px-4">
-        <h1 style={kahootStyle} className="text-center text-5xl font-medium text-yellow-800 mb-10 tracking-wide">PVP Arena</h1>
+        <h1 style={kahootStyle} className="text-center text-5xl font-medium text-indigo-800 mb-10 tracking-wide">PVP Arena</h1>
         
         <div style={kahootStyle} className="bg-white shadow-lg p-10 w-full max-w-2xl mx-auto flex flex-col justify-center">
           {/* Player Name Input */}
           <div className="mb-10">
-            <label htmlFor="playerName" style={kahootStyle} className="block text-2xl font-medium text-yellow-800 mb-4">
+            <label htmlFor="playerName" style={kahootStyle} className="block text-2xl font-medium text-indigo-800 mb-4">
               Enter your player name
             </label>
             <input
@@ -292,14 +292,14 @@ const PvpGame = () => {
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder="e.g. DragonSlayer99"
               style={inputStyle}
-              className="w-full px-6 py-4 text-xl border-2 border-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-yellow-800 font-medium"
+              className="w-full px-6 py-4 text-xl border-2 border-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-indigo-800 font-medium"
               disabled={isMatchmaking}
             />
           </div>
           
           {/* Profile Icon Selection */}
           <div className="mb-10">
-            <label style={kahootStyle} className="block text-2xl font-medium text-yellow-800 mb-6">
+            <label style={kahootStyle} className="block text-2xl font-medium text-indigo-800 mb-6">
               Choose your profile icon
             </label>
             <div className="flex justify-center items-center space-x-4">
@@ -323,8 +323,8 @@ const PvpGame = () => {
                       style={kahootStyle}
                       className={`cursor-pointer p-6 transition-all duration-200 
                         ${selectedIcon === actualIndex 
-                          ? 'bg-yellow-400 text-yellow-900 transform scale-125 shadow-lg' 
-                          : 'bg-yellow-100 text-yellow-600 hover:bg-yellow-200'}
+                          ? 'bg-indigo-400 text-indigo-900 transform scale-125 shadow-lg' 
+                          : 'bg-indigo-100 text-indigo-600 hover:bg-indigo-200'}
                         ${isMatchmaking ? 'opacity-80 cursor-not-allowed' : ''}`}
                     >
                       <div className="text-4xl">{icon.icon}</div>
@@ -345,7 +345,7 @@ const PvpGame = () => {
             
             {/* Page indicator */}
             <div className="flex justify-center mt-4">
-              <span style={kahootStyle} className="text-sm text-yellow-700">
+              <span style={kahootStyle} className="text-sm text-indigo-700">
                 {currentPage + 1} of {totalPages}
               </span>
             </div>
@@ -369,10 +369,10 @@ const PvpGame = () => {
       {showMatchFound && (
         <div style={modalOverlayStyle}>
           <div style={modalContentStyle}>
-            <h2 style={kahootStyle} className="text-center text-3xl font-bold text-yellow-800 mb-4">
+            <h2 style={kahootStyle} className="text-center text-3xl font-bold text-indigo-800 mb-4">
               Match Found !
             </h2>
-            <p className="text-center text-xl text-yellow-700 mb-6">
+            <p className="text-center text-xl text-indigo-700 mb-6">
               {acceptTimer} seconds
             </p>
             <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4">

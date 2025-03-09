@@ -35,7 +35,10 @@ const Welcome = () => {
 
                             {/* CTA Buttons */}
                             <div className="mt-8 flex justify-center md:justify-start space-x-4">
-                                <button className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow-md hover:bg-indigo-700 transition">
+                                <button 
+                                    className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow-md hover:bg-indigo-700 transition"
+                                    onClick={() => window.location.href = '/scan'}
+                                >
                                     Try TruthScan
                                 </button>
                                 <button className="px-6 py-3 bg-white border border-indigo-300 text-indigo-700 font-semibold rounded-full hover:bg-indigo-50 transition">
@@ -153,6 +156,28 @@ const Welcome = () => {
                                     className="w-full rounded-lg shadow-xl"
                                 />
                             </motion.div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* TruthMap Feature Section */}
+                <section className="py-16 bg-white">
+                    <div className="container mx-auto px-6 text-center">
+                        <h2 className="text-4xl font-bold text-indigo-800 mb-4">🔍 Introducing TruthMap</h2>
+                        <p className="text-lg text-gray-700 max-w-3xl mx-auto">
+                            TruthMap is our AI-powered tool designed to detect and visualize misinformation in real-time.
+                        </p>
+
+                        {/* Map Image with Shadow and Refined Border */}
+                        <div className="flex justify-center items-center mt-8">
+                            <div className="relative group">
+                                <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                                <img
+                                    src={map}
+                                    alt="TruthMap"
+                                    className="relative w-full md:max-w-4xl h-auto rounded-lg shadow-lg border border-gray-100"
+                                />
+                            </div>
                         </div>
                     </div>
                 </section>

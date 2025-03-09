@@ -91,7 +91,7 @@ const PvpMatch = ({ playerName, playerIcon }) => {
     position: 'absolute',
     transform: 'translate(-50%, -50%)',
     top: '50%',
-    backgroundColor: '#FF6B00',
+    backgroundColor: '#6366F1',
     borderRadius: '50%',
     width: '60px',
     height: '60px',
@@ -101,7 +101,7 @@ const PvpMatch = ({ playerName, playerIcon }) => {
     fontWeight: 'bold',
     fontSize: '1.5rem',
     color: 'white',
-    boxShadow: '0 0 20px rgba(255, 107, 0, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.5)',
+    boxShadow: '0 0 20px rgba(99, 102, 241, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.5)',
     zIndex: 2,
     transition: 'left 0.5s ease-in-out'
   };
@@ -116,7 +116,7 @@ const PvpMatch = ({ playerName, playerIcon }) => {
 
   if (gameOver) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100 p-6 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-purple-100 p-6 flex items-center justify-center">
         <div className="max-w-4xl w-full mx-auto bg-white rounded-2xl p-12 shadow-xl">
           <div className="text-center space-y-8">
             {/* Trophy Icon */}
@@ -125,7 +125,7 @@ const PvpMatch = ({ playerName, playerIcon }) => {
             </div>
 
             {/* Game Over Text */}
-            <h2 className="text-6xl font-bold mb-6 text-yellow-800" style={{
+            <h2 className="text-6xl font-bold mb-6 text-indigo-800" style={{
               fontFamily: "'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif"
             }}>
               Game Over!
@@ -148,8 +148,8 @@ const PvpMatch = ({ playerName, playerIcon }) => {
             {/* Play Again Button */}
             <button
               onClick={() => window.location.reload()}
-              className="mt-8 bg-gradient-to-r from-yellow-400 to-yellow-500 text-yellow-900 text-2xl font-bold py-6 px-12 rounded-xl 
-                hover:from-yellow-500 hover:to-yellow-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="mt-8 bg-gradient-to-r from-indigo-400 to-purple-500 text-white text-2xl font-bold py-6 px-12 rounded-xl 
+                hover:from-indigo-500 hover:to-purple-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
               style={{
                 fontFamily: "'Comic Sans MS', 'Chalkboard SE', 'Arial Rounded MT Bold', sans-serif"
               }}
@@ -163,7 +163,7 @@ const PvpMatch = ({ playerName, playerIcon }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-yellow-100 p-6">
+    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-purple-100 p-6">
       <style>{flameStyles}</style>
       <div className="max-w-4xl mx-auto">
         {/* Top Section with Players */}
