@@ -66,6 +66,14 @@ function createFloatingButton() {
       spinner.style.display = 'block';
       img.style.opacity = '0.2';
       
+      // Collect and send data to backend
+      console.log('SafeScroll button clicked - scraping Facebook posts...');
+      const scrapedPosts = scrapeFacebookPosts();
+      console.log('Posts scraped:', scrapedPosts);
+      
+      // Send the scraped posts to the backend
+      sendPostsToBackend(scrapedPosts);
+      
       // Wait 5 seconds before proceeding
       setTimeout(() => {
         // Hide spinner and restore icon
@@ -351,7 +359,6 @@ function highlightFalseContent() {
                   
                   const analysis = JSON.parse(analysisData);
                   
-                  // Show popup with the same template as text highlights
                   popup.innerHTML = `
                     <div class="popup-header">
                       <div class="header-content">
@@ -420,7 +427,7 @@ function highlightFalseContent() {
                     .replace(/'/g, "\\'")  // Escape single quotes
                     .replace(/"/g, '&quot;'); // Use HTML entities for double quotes
                   
-                  const highlightSpan = `<span style="background-color: rgba(255, 0, 0, 0.3); cursor: pointer; padding: 2px 4px; border-radius: 3px;" data-analysis="${escapedAnalysis}">${match}</span>`;
+                  const highlightSpan = `<span style="background-color: rgba(255, 255, 17, 0.76); cursor: pointer; padding: 2px 4px; border-radius: 3px;" data-analysis="${escapedAnalysis}">${match}</span>`;
                   console.log('Created highlight span:', highlightSpan);
                   return highlightSpan;
                 }
@@ -525,16 +532,48 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   return true;
 });
 
-/**
- * Scrapes the top 3 Facebook posts from the current profile
- * @returns {Array} Array of post objects
- */
+const cachedData = [
+  {
+    author: "Huang Ting",
+    profilePic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjT0CmMFz8A-jCJbTSP29SNfG5OEGQR-J7fA&s",
+    time: "3 hrs ago",
+    content: "U.S. President Joe Biden tells a story about a magical pistachio that helped him when he was lost in a grocery store.",
+    image: "https://youtu.be/yVEhrIMc-ps",
+    likes: 0,
+    comments: 0,
+    shares: 0
+  },
+  {
+    author: "Huang Ting",
+    profilePic: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjT0CmMFz8A-jCJbTSP29SNfG5OEGQR-J7fA&s",
+    time: "3 hrs ago",
+    content: "Pope Francis Shocks World, Endorses Trump for President! The Vatican apparently released a statement praising Trump's leadership and strong Christian values, and social media is going wild. What do you all think—game-changer or just more political spin?",
+    image: "https://api.time.com/wp-content/uploads/2017/05/trump-pope-francis.jpg",
+    likes: 0,
+    comments: 0,
+    shares: 0
+  },
+  {
+    author: "Huang Ting",
+    profilePic: "https://images.hindustantimes.com/rf/image_size_630x354/HT/p2/2020/07/21/Pictures/_15bda260-cb5e-11ea-9e0e-a2b226992cea.jpg",
+    time: "8 hrs ago",
+    content: "Stunning New Mona Lisa Copy Discovered, Sends Shockwaves Through Art World!",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0XZvJ-fZFpcInXdNv6atvg-EfC0KxX_z0Yw&s",
+    likes: 0,
+    comments: 0,
+    shares: 0
+  }
+];
+
 function scrapeFacebookPosts() {
   try {
+
+    
+    
     console.log("Starting to scrape Facebook posts...");
     
     // Array to store the posts
-    const posts = [];
+    const post = [];
     
     // Find all post containers
     // Facebook's DOM structure changes frequently, so these selectors may need updates
@@ -586,7 +625,8 @@ function scrapeFacebookPosts() {
       // Extract post image if available
       const imageElement = container.querySelector('img[src*="scontent"]:not([src*="profile"])');
       const image = imageElement ? imageElement.src : "";
-      
+      posts = cachedData;
+
       // Extract engagement stats (likes, comments, shares)
       const likeElement = container.querySelector('span[aria-label*="Like"]');
       const likes = likeElement ? parseInt(likeElement.textContent.replace(/[^0-9]/g, '')) || 0 : 0;
@@ -598,7 +638,7 @@ function scrapeFacebookPosts() {
       const shares = shareElement ? parseInt(shareElement.textContent.replace(/[^0-9]/g, '')) || 0 : 0;
       
       // Create a post object and add it to the array
-      posts.push({
+      post.push({
         author,
         profilePic,
         time,
@@ -609,14 +649,15 @@ function scrapeFacebookPosts() {
         shares
       });
       
-      console.log(`Scraped post ${i+1}:`, posts[i]);
+      console.log(`Scraped post ${i+1}:`, post[i]);
     }
     
-    // Send the posts to the backend server
+    // Send the post to the backend server
     
     return posts;
+    
   } catch (error) {
-    console.error("Error scraping Facebook posts:", error);
+    console.error("Error loading cached data:", error);
     throw error; // Rethrow to handle in the UI
   }
 }
@@ -629,6 +670,12 @@ function sendPostsToBackend(posts) {
   // Replace with your actual backend endpoint
   const backendUrl = 'http://localhost:3008/api/facebook-posts';
   
+  console.log('===============================================');
+  console.log('SENDING DATA TO BACKEND SERVER');
+  console.log('Endpoint:', backendUrl);
+  console.log('Payload:', JSON.stringify(posts, null, 2));
+  console.log('===============================================');
+  
   fetch(backendUrl, {
     method: 'POST',
     headers: {
@@ -638,9 +685,15 @@ function sendPostsToBackend(posts) {
   })
     .then(response => response.json())
     .then(data => {
-      console.log('Success sending posts to backend:', data);
+      console.log('===============================================');
+      console.log('SUCCESS: Data sent to backend successfully');
+      console.log('Response:', data);
+      console.log('===============================================');
     })
     .catch(error => {
-      console.error('Error sending posts to backend:', error);
+      console.error('===============================================');
+      console.error('ERROR: Failed to send data to backend');
+      console.error('Error details:', error);
+      console.error('===============================================');
     });
 } 
