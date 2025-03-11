@@ -420,7 +420,7 @@ function highlightFalseContent() {
                     .replace(/'/g, "\\'")  // Escape single quotes
                     .replace(/"/g, '&quot;'); // Use HTML entities for double quotes
                   
-                  const highlightSpan = `<span style="background-color: rgba(255, 255, 17, 0.76); cursor: pointer; padding: 2px 4px; border-radius: 3px;" data-analysis="${escapedAnalysis}">${match}</span>`;
+                  const highlightSpan = `<span style="background-color: rgba(255, 0, 0, 0.3); cursor: pointer; padding: 2px 4px; border-radius: 3px;" data-analysis="${escapedAnalysis}">${match}</span>`;
                   console.log('Created highlight span:', highlightSpan);
                   return highlightSpan;
                 }
