@@ -82,7 +82,7 @@ def process_social_media_content(posts):
                 "image": "https://youtu.be/yVEhrIMc-ps",
                 "text_analysis": {
                     "classification": "False",
-                    "confidence": "100% confidence",
+                    "confidence": "85% confidence",
                     "explanation": "There is no record of President Joe Biden ever making such a statement in any official speech, interview, or public record. The phrase appears to be fabricated or satirical, as no credible news source has reported Biden discussing a 'magical pistachio' or being 'lost in a grocery store. The wording suggests an exaggerated or fictional narrative, possibly derived from online misinformation or deepfake content.",
                     "false_content": "U.S. President Joe Biden tells a story about a magical pistachio",
                     "cross_validation sources": ["https://www.factcheck.org/",
@@ -133,7 +133,7 @@ def process_social_media_content(posts):
                 "image": "https://media.licdn.com/dms/image/v2/D4E12AQGdbWXucNsEoQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1710839851926?e=1746662400&v=beta&t=Za4SXlZnaEBv1ecdSVvsLJob9_GOQhs_6rJQf8G74a4",
                 "text_analysis": {
                     "classification": "False",
-                    "confidence": "100% confidence",
+                    "confidence": "92% confidence",
                     "explanation": "​The statement 'Just got my hands on the latest AI chip AMD's Blackwell B200 - the processing power is INSANE!' is incorrect. The Blackwell B200 is a product of NVIDIA, not AMD.",
                     "false_content": "AMD's Blackwell B200",
                     "cross_validation sources": ["https://nvidianews.nvidia.com/news/nvidia-blackwell-platform-arrives-to-power-a-new-era-of-computing",

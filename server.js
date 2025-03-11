@@ -17,20 +17,57 @@ const instagramApp = express();
 const twitterApp = express();
 
 // Set ports for each platform
-const mainPort = 3000;
-const facebookPort = 3001;
-const instagramPort = 3002;
-const twitterPort = 3003;
+const mainPort = 3008;
+const facebookPort = 3005;
+const instagramPort = 3006;
+const twitterPort = 3007;
 
 // Platform-specific caches
 let cachedFacebookResults = null;
 let cachedInstagramResults = null;
 let cachedTwitterResults = null;
 
+// Add middleware to parse JSON
+mainApp.use(express.json());
+
 // Configure Main app server (root directory)
 mainApp.use('/assets', express.static(path.join(__dirname, 'dist/assets')));
 mainApp.use(express.static(path.join(__dirname, 'dist')));
 mainApp.use('/images', express.static(path.join(__dirname, 'images')));
+
+// Add CORS headers to allow requests from the Chrome extension
+mainApp.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
+// Endpoint to receive scraped posts from the Chrome extension
+mainApp.post('/api/facebook-posts', (req, res) => {
+  try {
+    const { posts } = req.body;
+    console.log('Received scraped Facebook posts:', posts);
+    
+    // Process the posts (you can add your misinformation detection here)
+    const processedPosts = processSocialMediaContent(posts);
+    
+    // Store in cache
+    cachedFacebookResults = {
+      posts: processedPosts,
+      timestamp: new Date().toISOString()
+    };
+    
+    res.json({ success: true, message: 'Posts received and processed successfully' });
+  } catch (error) {
+    console.error('Error processing scraped posts:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 mainApp.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
