@@ -67,7 +67,7 @@ Sentinel AI combines powerful AI models, a browser plugin, and interactive gamep
 
 ## 🖼️ Slide Deck
 
-📽 View our project slides here: (https://www.canva.com/design/DAGg7FsNJts/XIfDTL3TFMms1KWYKWHEJA/edit?ui=eyJIIjp7IkEiOnRydWV9fQ)
+📽 View our project slides here: [Slide link](https://www.canva.com/design/DAGg7FsNJts/XIfDTL3TFMms1KWYKWHEJA/edit?ui=eyJIIjp7IkEiOnRydWV9fQ)
 
 ---
 
