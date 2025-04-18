@@ -1,130 +1,79 @@
-# Sentinel AI
+# 🛡️ Sentinel AI  
+**One Platform. Zero Misinformation.**  
+An all-in-one solution to identify and understand deepfakes and misinformation through AI-powered gamification, real-time analysis, and educational tools.
 
-An all on one platform to help users identify and understand deepfakes through gamification and interactive challenges.
+---
 
-## Overview
+## ⚡ Overview
 
-This project includes:
-- A React frontend for the user interface
-- An Express backend for game logic and API endpoints
-- Interactive game modes to test users' abilities to identify deepfakes
-- Leaderboard system to track scores
+Sentinel AI combines powerful AI models, a browser plugin, and interactive gameplay to fight the rising tide of online falsehoods.
 
-## Features
+- 🌐 **React Frontend** for immersive UX  
+- 🔗 **Express Backend** for game logic & API integration  
+- 🎮 **Gamified Challenges** to educate users through play  
+- 🧠 **ML-Powered Detection** of fake news, deepfakes & propaganda  
+- 🧩 **Browser Plugin** for real-time content analysis and detection  
 
-- **Multiple Game Modes**:
-  - PvP: Challenge another player in real-time detection battles
-  - Weekly Challenge: New challenges every week with special rewards
-  - Misinformation Maze: Navigate through increasingly difficult fake content
-  - Propaganda Decoder: Learn to identify and decode propaganda techniques
-  
-- **Weekly Leaderboard**: Track top performers and scores
-- **Modern UI**: Clean, responsive design with subtle animations
-- **Educational Content**: Learn to spot deepfakes through gameplay
+---
 
-## Project Structure
+## ✨ Features
 
-```
-/
-├── node_modules/      # Frontend dependencies
-├── public/            # Static assets
-├── server/            # Backend server
-│   ├── node_modules/  # Server dependencies
-│   ├── routes/        # API routes
-│   │   └── game.js    # Game-related endpoints
-│   ├── index.js       # Server entry point
-│   └── .env           # Server environment variables
-├── src/               # Frontend source code
-│   ├── assets/        # Images and media
-│   ├── components/    # React components
-│   │   ├── Game.jsx   # Game page component
-│   │   ├── Home.jsx   # Homepage component
-│   │   └── ...        # Other components
-│   └── App.js         # Main React component
-└── package.json       # Frontend dependencies and scripts
-```
+### 🔍 Detection Tools
+- **AI-Powered Analysis**: Classifies fake news, deepfakes, and propaganda using NLP, vision, and emotional models  
+- **Sentiment & Emotional Insights**: Highlights emotionally manipulative content  
+- **Global Trend Mapping**: Visualizes misinformation clusters on a world heatmap
 
-## Getting Started
+### 🎮 Gamified Learning
+- **PvP Battles**: Compete in real-time to identify fake vs. real content  
+- **Weekly Challenges**: Fresh scenarios weekly with rewards  
+- **Misinformation Maze**: Story-based fact-checking obstacle course  
+- **Propaganda Decoder**: Reframe biased narratives into neutral form  
+- **Progression & Leaderboards**: Track scores and level up across game modes  
 
-### Prerequisites
+### 🧠 TruthAcademy
+- Interactive modules on identifying misinformation  
+- Bite-sized learning powered by real-world examples  
+- AI model explainability embedded within lessons  
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
+### 🌐 SafeScroll (Browser Plugin)
+- Highlights suspicious content on any webpage in real time  
+- Provides instant credibility ratings and reasoning  
+- Works on major platforms like Twitter, Reddit, and news outlets  
 
-### Installation
 
-1. Clone the repository:
-```
-git clone <repository-url>
-cd deepfake
-```
 
-2. Install frontend dependencies:
-```
-npm install
-```
+## 🛠 Development Notes
 
-3. Install backend dependencies:
-```
-cd server
-npm install
-cd ..
-```
+- **Frontend**: React with Tailwind CSS & React Router  
+- **Backend**: Node.js + Express APIs  
+- **Plugin**: Built as a lightweight Chrome extension with integration to the detection engine  
+- **Architecture**: Modular backend with support for future ML model integrations  
+- **Mock Data**: Currently used, future upgrade planned for persistent database support  
 
-### Running the Application
+---
 
-You can run both the frontend and backend concurrently with a single command:
-```
-npm run dev
-```
+## 📈 Future Enhancements
 
-Or run them individually:
+### 🔄 Scalability
+- Cloud-native, microservice-based deployment
+- Big data support with distributed pipelines
 
-**Frontend (React):**
-```
-npm start
-```
-Frontend runs on: http://localhost:3000
+### 🔮 Future Prospects
+- Multilingual misinformation detection  
+- AI model refinement and user personalization  
+- Expanded gamification: Quests, badges, and multiplayer storylines  
 
-**Backend (Express):**
-```
-cd server
-npm run dev
-```
-Backend runs on: http://localhost:3001
+---
 
-## API Endpoints
+## 🖼️ Slide Deck
 
-The backend provides the following API endpoints:
+📽 View our project slides here:  
+👉 [Insert Slide Link]([https://your-link.com](https://www.canva.com/design/DAGg7FsNJts/XIfDTL3TFMms1KWYKWHEJA/edit?ui=eyJIIjp7IkEiOnRydWV9fQ))
 
-- `GET /api/game` - Get main game data
-- `GET /api/game/status` - Check game server status
-- `GET /api/game/leaderboard` - Get leaderboard data
-- `POST /api/game/start` - Start a new game session
-- `POST /api/game/submit` - Submit game results
+---
 
-## Development
+## 👥 Team
 
-- The frontend uses React with React Router for navigation
-- Styling is done with Tailwind CSS
-- The backend is built with Express.js
-- Data is currently mocked in the backend and will be replaced with a database connection in future releases
+Abhiraj Gupta, Grace, Huang Ting, Jolynn
 
-## Future Enhancements
-
-- User authentication system
-- Persistent storage with database integration
-- More advanced game modes and challenges
-- User profile and history tracking
-
-## Troubleshooting
-
-**Port Conflicts:**
-- The React app uses port 3000 by default
-- The Express server uses port 3001 by default
-- If you encounter port conflicts, update the `.env` file in the server directory or the `package.json` start scripts
-
-**API Connection Issues:**
-- Check that both frontend and backend are running
-- Verify the API_URL in the Game.jsx component points to the correct server address
-- Check browser console for CORS or network errors
+> “Stay ahead of the lies. Choose Sentinel AI.”  
